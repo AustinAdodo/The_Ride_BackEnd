@@ -14,6 +14,7 @@ public class Driver extends UserBaseModel<UUID> {
     public String TaxID;
     public BigDecimal totalEarnings = BigDecimal.ZERO;
     public String VehicleColor;
+    public String VehiclePlateNumber;
     public String VehicleRegistrationStatus = "Complete";
     public String RegistrationStatus = "Active";
     public List<Trip> AllTrips;
