@@ -5,19 +5,15 @@ package the_ride.the_ride_backend.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import the_ride.the_ride_backend.Models.Driver.Driver;
-import the_ride.the_ride_backend.Models.Trip.Trip;
 import the_ride.the_ride_backend.Models.User.Customer;
 import the_ride.the_ride_backend.Utiities.DriverSearchStatus;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 
 @Service
 public class BookingService {
     private final UserService _userService;
-    private final TripService _tripService;
     private final DriverService _driverService;
     private final LocatorService _locatorService;
     private final MessagingService _MsgService;
@@ -26,31 +22,26 @@ public class BookingService {
     private Driver currentDriver = null;
 
     @Autowired
-    public BookingService(UserService userS, TripService tripService, DriverService drivers,
+    public BookingService(UserService userS, DriverService drivers,
                           LocatorService locatorService, MessagingService msgService) {
         _userService = userS;
-        _tripService = tripService;
         _driverService = drivers;
         _locatorService = locatorService;
         _MsgService = msgService;
         currentCustomer = _userService.getCurrentLoggedInUser();
     }
 
-    /*
-    *
-    */
-    public void SaveAsTrip() {
-        Trip currentTrip = new Trip();
-        currentTrip.tripDate = LocalDate.now();
-        currentTrip.startTime= LocalDateTime.now();
-        currentTrip.endTime= null;
-        _tripService.StartTrip(currentTrip);
-        // the booking officially becomes a trip
+    public Customer GetCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public Driver GetChosenDriverDetails() {
+        return currentDriver;
     }
 
     /**
-    * This is a customer only cancel action.
-    */
+     * This is a customer only cancel action.
+     */
     public void CancelBooking() {
         //check if booking exists with the current user
         if (Objects.equals(FindStatus, "Found") && _driverService.isMapped(currentCustomer, currentDriver)) {
