@@ -1,10 +1,11 @@
 package the_ride.the_ride_backend.Models.BaseModels;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class TripBaseModel<T> extends BaseModel<T> {
+public class TripBaseModel<T extends Serializable> extends BaseModel<T> {
 
     public LocalDate tripDate;
     public LocalDateTime startTime;
@@ -18,12 +19,12 @@ public class TripBaseModel<T> extends BaseModel<T> {
     }
 
     @Override
-    public T getID() {
+    public T getId() {
         return id;
     }
 
     @Override
-    public void setID(T id) {
+    public void setId(T id) {
         this.id = id;
     }
 }
