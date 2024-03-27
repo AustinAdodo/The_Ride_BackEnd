@@ -18,10 +18,31 @@ public class Driver extends UserBaseModel<UUID> {
     public String VehicleRegistrationStatus = "Complete";
     public String RegistrationStatus = "Active";
     public List<Trip> AllTrips;
+    public Double currentLongitude;
+    public Double currentLatitude;
     public DriverStatus TripStatus = DriverStatus.Free;
 
     public Driver() {
         super("driver");
     }
 
+    public Driver(String firstname, String lastname, String address, Double Long,
+                  Double latitude,
+                  String vehicleColor) {
+        this.Firstname = firstname;
+        this.Lastname = lastname;
+        this.Address = address;
+        this.currentLongitude = Long;
+        this.currentLatitude =latitude;
+        this.VehicleColor = vehicleColor;
+    }
+
+
+    public double getLatitude() {
+        return this.currentLatitude;
+    }
+
+    public double getLongitude() {
+        return this.currentLongitude;
+    }
 }
