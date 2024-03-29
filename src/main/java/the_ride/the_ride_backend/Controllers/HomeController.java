@@ -23,7 +23,6 @@ import java.util.UUID;
 
 @RestController
 public class HomeController {
-
     private final DriverService _driverService;
     private final UserService _userService;
 
@@ -66,6 +65,7 @@ public class HomeController {
                 Driver driver = (Driver) person;
                 _driverService.registerDriver(driver);
                 return HttpStatus.OK;
+
             }
         }
         return HttpStatus.BAD_REQUEST;

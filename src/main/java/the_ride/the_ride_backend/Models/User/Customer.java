@@ -23,13 +23,8 @@ public class Customer extends UserBaseModel<UUID> {
         this.id = id;
     }
     public String CurrentStreetName;
-    public String CurrentTownName;
-    public String CurrentLocalGovernmentName;
-    public String CurrentDistrict;
-    public String CurrentCity;
-    public String CurrentState;
-    public String CurrentProvince;
-    public String DefaultHomeAddress = this.Address;
+
+    public String DefaultHomeAddress = this.address;
     public Customer() {
         super("customer");
     }
