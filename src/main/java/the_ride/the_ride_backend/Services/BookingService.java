@@ -48,7 +48,7 @@ public class BookingService {
             _driverService.UnMapDriver(currentCustomer, currentDriver);
         }
         FindStatus = String.valueOf(DriverSearchStatus.NotFound);
-        _MsgService.sendNotificationMessage(currentDriver, "The planned trip with " + currentCustomer.getFirstname() +
+        _MsgService.sendNotificationMessage(currentDriver, "The planned trip with " + currentCustomer.getFirstName() +
                 " was cancelled.");
         //End booking
     }
@@ -63,7 +63,7 @@ public class BookingService {
         } else {
             _MsgService.sendNotificationMessage(currentCustomer, "No Driver Found, Click Refresh.");
         }
-        if (!currentCustomer.BlackListedDriversIds.contains(DriverList.get(0).getID())) {
+        if (!currentCustomer.BlackListedDriversIds.contains(DriverList.get(0).getId())) {
             currentDriver = DriverList.get(0);
             _MsgService.sendRequestMessage(DriverList.get(0));
         } else {
