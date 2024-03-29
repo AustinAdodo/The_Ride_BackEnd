@@ -1,27 +1,49 @@
 package the_ride.the_ride_backend.Controllers;
 
-
-import org.springframework.data.repository.query.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
+import the_ride.the_ride_backend.Models.Driver.Driver;
+import the_ride.the_ride_backend.Models.User.Customer;
+import the_ride.the_ride_backend.Services.DriverService;
+import the_ride.the_ride_backend.Services.UserService;
+import the_ride.the_ride_backend.Utiities.LoginCredentials;
+import the_ride.the_ride_backend.Utiities.Response;
 
+import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
 public class HomeController {
 
-    @GetMapping("/login")
-    public ResponseEntity<Boolean> login(@Param("username") String email, @Param("password") String password) {
-        boolean isAuthenticated = authenticate(email, password);
+    private final DriverService _driverService;
+    private final UserService _userService;
+
+    @Autowired
+    public HomeController(DriverService driverService, UserService userService) {
+        _driverService = driverService;
+        _userService = userService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Response> login(@RequestBody LoginCredentials credentials) {
+        boolean isAuthenticated = authenticate(credentials.getUsername(), credentials.getPassword());
         if (isAuthenticated) {
-            return ResponseEntity.ok(true);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new Response(false, "accepted"));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(new Response(false, "Unable to resolve request"));
         }
     }
 
@@ -33,14 +55,32 @@ public class HomeController {
     }
 
     @PostMapping("/signup")
-    public String signUp(@Param("Person")UserBaseModel<UUID> Person) {
-        return "Secure page";
+    public HttpStatus signUp(@RequestBody Object personObj) {
+        if (personObj instanceof UserBaseModel) {
+            UserBaseModel<UUID> person = (UserBaseModel<UUID>) personObj;
+            if ("Customer".equals(person.Usertype)) {
+                Customer customer = (Customer) person;
+                _userService.registerUser(customer);
+                return HttpStatus.OK;
+            } else if ("Driver".equals(person.Usertype)) {
+                Driver driver = (Driver) person;
+                _driverService.registerDriver(driver);
+                return HttpStatus.OK;
+            }
+        }
+        return HttpStatus.BAD_REQUEST;
     }
 
     @GetMapping("/secure")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public String secure() {
-        return "Secure page";
+    public ResponseEntity<Driver> OnboardDriver(@RequestBody Driver driver) {
+        if (driver != null) {
+            HttpHeaders headers = new HttpHeaders();
+            this._driverService.add(driver);
+            headers.add(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8");
+            return new ResponseEntity<>(driver, headers, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new Driver(), HttpStatus.NOT_FOUND);
     }
 
     private boolean authenticate(String email, String password) {
