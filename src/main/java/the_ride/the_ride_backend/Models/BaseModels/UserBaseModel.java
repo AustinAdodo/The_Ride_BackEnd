@@ -5,18 +5,36 @@ import lombok.Getter;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import the_ride.the_ride_backend.Models.Driver.Driver;
+import the_ride.the_ride_backend.Models.User.Customer;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "Usertype")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Customer.class, name = "Customer"),
+        @JsonSubTypes.Type(value = Driver.class, name = "Driver")
+})
 @Getter
-public class UserBaseModel<T extends Serializable> extends BaseModel<T> {
-    public String Firstname;
+public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T> {
+    public String firstName;
     public Integer Rating;
-    public String Middlename;
-    public String Lastname;
+    public String middleName;
+    public String lastName;
+    public int TotalTrips;
+    public String Password;
     public String email;
     private String Username;
     public Date DateOfBirth;
     public String status;
-    public String Address;
+    public String address;
     public String Category;
+    public String Usertype;
+    public String currentLongitude;
+    public String currentLatitude;
 
     public UserBaseModel() {
     }
@@ -45,5 +63,9 @@ public class UserBaseModel<T extends Serializable> extends BaseModel<T> {
     @Override
     public void setId(T id) {
         this.id = id;
+    }
+
+    public void setPassword(String password) {
+        this.Password = password;
     }
 }

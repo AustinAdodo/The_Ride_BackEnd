@@ -3,12 +3,17 @@ package the_ride.the_ride_backend.Models.BaseModels;
 //import javax.persistence.Column;
 import jakarta.persistence.*;
 
-public abstract class BaseModel<PrimaryKey> implements IModel<PrimaryKey> {
-    @Column(name = "ID", nullable = false, updatable = false)
+import java.io.Serializable;
+
+@MappedSuperclass
+public abstract class BaseModel<PrimaryKey extends Serializable> implements IModel<PrimaryKey> {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected PrimaryKey id;
 
-    public abstract PrimaryKey getID();
 
-    public abstract void setID(PrimaryKey id);
+    public abstract PrimaryKey getId();
+
+    public abstract void setId(PrimaryKey id);
 }
