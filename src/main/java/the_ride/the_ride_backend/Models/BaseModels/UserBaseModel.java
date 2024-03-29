@@ -10,6 +10,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import the_ride.the_ride_backend.Models.Driver.Driver;
 import the_ride.the_ride_backend.Models.User.Customer;
 
+/**
+ * annotations @JsonTypeInfo and @JsonSubTypes are used for handling polymorphic types during serialization
+ * and deserialization
+ */
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
@@ -18,6 +22,7 @@ import the_ride.the_ride_backend.Models.User.Customer;
         @JsonSubTypes.Type(value = Customer.class, name = "Customer"),
         @JsonSubTypes.Type(value = Driver.class, name = "Driver")
 })
+
 @Getter
 public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T> {
     public String firstName;
