@@ -26,10 +26,14 @@ public class UserService {
         this._userRepository = userRepository;
     }
 
-    public void registerUser(UserBaseModel<UUID> Person) {
-        Person.status ="Online";
+    public void registerUser(Customer Person) {
+        Person.status = "Online";
         Customer user = new Customer();
         user.Usertype = Person.Usertype;
+        user.sex = Person.sex;
+        user.isOnlyMySexAllowed = Person.isOnlyMySexAllowed;
+        user.DefaultHomeAddress = Person.address;
+        user.address = Person.address;
         user.setPassword(passwordEncoder.encode(Person.Password));
         user.status = Person.status;
         user.TotalTrips = 0;

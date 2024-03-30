@@ -26,6 +26,8 @@ import the_ride.the_ride_backend.Models.User.Customer;
 @Getter
 public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T> {
     public String firstName;
+    public String photourl;
+    public  String sex;
     public Integer Rating;
     public String middleName;
     public String lastName;
