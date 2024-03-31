@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend.config;
+package the_ride.the_ride_backend.config.Sockets;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
