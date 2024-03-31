@@ -22,6 +22,9 @@ public class RabbitMQConfig {
         return new Queue(queueName, false);
     }
 
+    /**
+    * direct exchange has been utilised.
+    */
     @Bean
     DirectExchange exchange() {
         return new DirectExchange(exchange);
