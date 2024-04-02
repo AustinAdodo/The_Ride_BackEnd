@@ -75,6 +75,7 @@ public class DriverService {
         driver.carModel = "Toyota 2002";
         driver.totalEarnings = BigDecimal.valueOf(0.0);
         driver.TaxID = "AAA1444Y";
+        driver.address = Person.address;
         driver.VehiclePlateNumber = "CC1AA2";
         driver.Rating = 0;
         driver.RegistrationStatus = "Active";
