@@ -1,5 +1,6 @@
 package the_ride.the_ride_backend.Controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,6 @@ import the_ride.the_ride_backend.Services.UserService;
 import the_ride.the_ride_backend.Utiities.LoginCredentials;
 import the_ride.the_ride_backend.Utiities.Response;
 
-import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -54,21 +53,17 @@ public class HomeController {
     }
 
     @PostMapping("/signup")
-    public HttpStatus signUp(@RequestBody Object personObj) {
-        if (personObj instanceof UserBaseModel) {
-            UserBaseModel<UUID> person = (UserBaseModel<UUID>) personObj;
+    public ResponseEntity<Boolean> signUp(@Valid @RequestBody UserBaseModel<UUID> person) {
             if ("Customer".equals(person.Usertype)) {
                 Customer customer = (Customer) person;
                 _userService.registerUser(customer);
-                return HttpStatus.OK;
+                return ResponseEntity.ok().build();
             } else if ("Driver".equals(person.Usertype)) {
                 Driver driver = (Driver) person;
                 _driverService.registerDriver(driver);
-                return HttpStatus.OK;
-
+                return ResponseEntity.ok().build();
             }
-        }
-        return HttpStatus.BAD_REQUEST;
+        return ResponseEntity.badRequest().body(false);
     }
 
     @GetMapping("/secure")
