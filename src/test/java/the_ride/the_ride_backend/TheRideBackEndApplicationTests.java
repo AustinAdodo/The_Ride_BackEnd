@@ -87,10 +87,6 @@ class TheRideBackEndApplicationTests {
     }
 
     @Test
-    void contextLoads() {
-    }
-
-    @Test
     public void shouldAllowSavingOfCustomer_Modified_UTF_8() throws Exception {
         var mocker = this.mockMvc;
         for (Customer customer : customers) {
