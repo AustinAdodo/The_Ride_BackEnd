@@ -10,8 +10,8 @@ public class Payload {
     public String photoUrl = "";
     public String sex = "";
     public String type = "General Message";
+    public String topic = "";
+    public String status = "";
+    public String location = "";
 
-//    public Payload (Payload payload) {
-//
-//    }
 }
