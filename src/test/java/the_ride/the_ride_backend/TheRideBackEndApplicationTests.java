@@ -1,22 +1,16 @@
 package the_ride.the_ride_backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+
 import the_ride.the_ride_backend.Models.User.Customer;
 import the_ride.the_ride_backend.Services.UserService;
 
@@ -33,7 +27,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+/**
+ * '@RunWith(SpringRunner.class)' is from JUnit 4 and will not be used
+ */
+
 @AutoConfigureMockMvc
 @SpringBootTest
 class TheRideBackEndApplicationTests {
@@ -45,7 +42,7 @@ class TheRideBackEndApplicationTests {
     // Connection and statement for database setup/teardown
     private static Connection connection;
     private static Statement statement;
-    private static final List<Customer> customers = new ArrayList<Customer>();
+    private static final List<Customer> customers = new ArrayList<>();
 
     /**
      * Injects the mock Library.
@@ -53,7 +50,7 @@ class TheRideBackEndApplicationTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws SQLException {
         // String In_memory_Connection = "jdbc:sqlite::memory:"; <- sqlite
         String inMemoryConnection = "jdbc:h2:mem:testdb;USER=sa;PASSWORD=";
@@ -63,19 +60,19 @@ class TheRideBackEndApplicationTests {
                 "(id INT PRIMARY KEY AUTO_INCREMENT, firstame TEXT, lastname TEXT)");
     }
 
-    @BeforeClass
-    public static void populateArticles() {
+    @BeforeAll
+    public static void populateCustomers() {
         customers.add(new Customer("Austin", "Adodo"));
         customers.add(new Customer("Tony", "Kroos"));
         customers.add(new Customer("Cristiano", "Ronaldo"));
     }
 
-    @Before
+    @BeforeEach
     public void clearDB() {
         service.clear();
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() throws SQLException {
         // Drop the 'articles' table
         statement.execute("DROP TABLE Customers");
