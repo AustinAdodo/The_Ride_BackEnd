@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
 
-/*
+/**
  * For internal Users
  */
 

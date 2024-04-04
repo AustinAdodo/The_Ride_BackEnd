@@ -57,7 +57,7 @@ public class BookingService {
      * Finds the closest driver and sends message asynchronously to the driver.
      */
     public void FindDriver() {
-        var DriverList = _locatorService.driversNearSpecifiedLocation(currentCustomer.CurrentStreetName);
+        var DriverList = _locatorService.driversNearSpecifiedLocation(currentCustomer.currentLatitude);
         if (!DriverList.isEmpty()) {
             FindStatus = String.valueOf(DriverSearchStatus.Found);
         } else {
@@ -65,6 +65,8 @@ public class BookingService {
         }
         if (!currentCustomer.BlackListedDriversIds.contains(DriverList.get(0).getId())) {
             currentDriver = DriverList.get(0);
+            //send message "Driver found"
+            //set status of driver to Driver.Occupied
             _MsgService.sendRequestMessage(DriverList.get(0));
         } else {
             currentDriver = DriverList.get(1);

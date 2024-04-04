@@ -27,7 +27,7 @@ import the_ride.the_ride_backend.Models.User.Customer;
 public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T> {
     public String firstName;
     public String photourl;
-    public  String sex;
+    public String sex;
     public Integer Rating;
     public String middleName;
     public String lastName;
@@ -74,5 +74,14 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
 
     public void setPassword(String password) {
         this.Password = password;
+    }
+
+    public void setName(String name) {
+        this.firstName = name.split(" ")[0];
+        this.lastName = name.split(" ")[1];
+    }
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
     }
 }
