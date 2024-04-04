@@ -30,9 +30,11 @@ public class Customer extends UserBaseModel<UUID> {
     public String DefaultHomeAddress = this.address;
 
     public Customer(String firstname, String lastname) {
-        this.firstName=firstname;
-        this.lastName=lastname;
+        super();
+        this.firstName = firstname;
+        this.lastName = lastname;
     }
+
     public Customer() {
         super("customer");
     }
