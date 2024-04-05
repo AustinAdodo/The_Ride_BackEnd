@@ -10,4 +10,4 @@ RabbitMQ uses `port 5672` on localhost and wbsocket endpoint is `http://localhos
 
 ## RabbitMQ Integration
 
-Enure Enrlang and rRabbitMQ are both installed on yor development machine and the installation is done with the administator account to avoid complexities, by convention Erlang is installed before RabbitMQ.
+Ensure Erlang and rRabbitMQ are both installed on yor development machine and the installation is done with the administrator account to avoid complexities, by convention Erlang is installed before RabbitMQ.
