@@ -1,12 +1,18 @@
 package the_ride.the_ride_backend.Models.BaseModels;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import the_ride.the_ride_backend.Models.Driver.Driver;
 import the_ride.the_ride_backend.Models.User.Customer;
 
@@ -24,27 +30,30 @@ import the_ride.the_ride_backend.Models.User.Customer;
 })
 
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T> {
+    @NotNull
+    @Size(min = 1)
     public String firstName;
     public String photourl;
     public String sex;
     public Integer Rating;
     public String middleName;
+    @NotNull @Size(min = 1)
     public String lastName;
     public int TotalTrips;
     public String Password;
     public String email;
     private String Username;
-    public Date DateOfBirth;
+    public LocalDate DateOfBirth;
     public String status;
     public String address;
     public String Category;
     public String Usertype;
     public String currentLongitude;
     public String currentLatitude;
-
-    public UserBaseModel() {
-    }
 
     public UserBaseModel(String category) {
         this.Category = category;
