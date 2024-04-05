@@ -18,10 +18,11 @@
     </properties>
     <dependencies>
         <!-- Configure Hibernate -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.3.1.Final</version>
+            <version>6.4.4.Final</version>
         </dependency>
         <!-- Spring Boot AMQP Starter for RabbitMQ -->
         <dependency>
