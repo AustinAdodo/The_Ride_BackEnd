@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import org.hibernate.annotations.GenericGenerator;
 import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
 import the_ride.the_ride_backend.Utiities.DriverStatus;
 
@@ -13,8 +14,9 @@ import java.util.UUID;
 @Entity
 public class Driver extends UserBaseModel<UUID> {
     @jakarta.persistence.Id
-    @Column(name = "ID", nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 
     @Override

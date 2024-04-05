@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-
 import the_ride.the_ride_backend.Models.User.Customer;
 import the_ride.the_ride_backend.Services.UserService;
 
@@ -33,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@ActiveProfiles("test")
 class TheRideBackEndApplicationTests {
     @Autowired
     private UserService service;
@@ -50,14 +51,18 @@ class TheRideBackEndApplicationTests {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * String In_memory_Connection = "jdbc:sqlite::memory:"; <- sqlite
+     */
     @BeforeAll
     public static void setUp() throws SQLException {
-        // String In_memory_Connection = "jdbc:sqlite::memory:"; <- sqlite
-        String inMemoryConnection = "jdbc:h2:mem:testdb;USER=sa;PASSWORD=";
-        connection = DriverManager.getConnection(inMemoryConnection);
+        String inMemoryConnection = "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1";
+        //String inMemoryConnection = "jdbc:h2:mem:testdb;USER=sa;PASSWORD=";
+        connection = DriverManager.getConnection(inMemoryConnection, "sa", "");
         statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS Customers " +
-                "(id INT PRIMARY KEY AUTO_INCREMENT, firstame TEXT, lastname TEXT)");
+        statement.execute("CREATE TABLE IF NOT EXISTS customer " +
+                "(id UUID DEFAULT RANDOM_UUID() PRIMARY KEY, firstname VARCHAR(255), lastname VARCHAR(255), " +
+                "isOnlyMySexAllowed VARCHAR(255), DefaultHomeAddress VARCHAR(255))");
     }
 
     @BeforeAll
@@ -74,13 +79,13 @@ class TheRideBackEndApplicationTests {
 
     @AfterAll
     public static void tearDown() throws SQLException {
-        // Drop the 'articles' table
-        statement.execute("DROP TABLE Customers");
+        // Drop the 'customer' table
+        statement.execute("DROP TABLE customer");
         statement.close();
         connection.close();
     }
 
-    public void addArticles() {
+    public void addCustomers() {
         for (Customer customer : customers) {
             service.add(customer);
         }
@@ -100,7 +105,7 @@ class TheRideBackEndApplicationTests {
     }
 
     @Test
-    public void shouldLetUsPostArticles() throws Exception {
+    public void shouldLetUsPostCustomers() throws Exception {
         for (Customer customer : customers) {
             this.mockMvc.perform(post("/customers")
                             .content(asJsonString(customer))
@@ -112,8 +117,8 @@ class TheRideBackEndApplicationTests {
     }
 
     @Test
-    public void shouldAllowUpdatingArticles() throws Exception {
-        addArticles();
+    public void shouldAllowUpdatingCustomers() throws Exception {
+        addCustomers();
         String name = "Another Name";
         List<Customer> all = this.service.getAll();
         Customer customer = this.service.getAll().get(0);
@@ -130,8 +135,7 @@ class TheRideBackEndApplicationTests {
     public static String asJsonString(final Object obj) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
-            final String jsonContent = mapper.writeValueAsString(obj);
-            return jsonContent;
+            return mapper.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

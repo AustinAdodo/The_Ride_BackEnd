@@ -1,6 +1,7 @@
 package the_ride.the_ride_backend.Models.User;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
 import the_ride.the_ride_backend.Utiities.BooleanString;
 
@@ -8,14 +9,18 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "customer")
 public class Customer extends UserBaseModel<UUID> {
     @jakarta.persistence.Id
-    @Column(name = "ID", nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 
     @BooleanString
     public String isOnlyMySexAllowed;
+
+    public String DefaultHomeAddress = this.address;
 
     @Override
     public UUID getId() {
@@ -26,8 +31,6 @@ public class Customer extends UserBaseModel<UUID> {
     public void setId(UUID id) {
         this.id = id;
     }
-
-    public String DefaultHomeAddress = this.address;
 
     public Customer(String firstname, String lastname) {
         super();

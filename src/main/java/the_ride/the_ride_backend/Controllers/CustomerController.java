@@ -31,10 +31,10 @@ public class CustomerController {
     }
 
     @GetMapping("/customers")
-    public ResponseEntity<List<Customer>> getAllArticles() {
-        List<Customer> articles = this.service.getAll();
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        List<Customer> customers = this.service.getAll();
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8");
-        return new ResponseEntity<>(articles, headers, HttpStatus.OK);
+        return new ResponseEntity<>(customers, headers, HttpStatus.OK);
     }
 }
