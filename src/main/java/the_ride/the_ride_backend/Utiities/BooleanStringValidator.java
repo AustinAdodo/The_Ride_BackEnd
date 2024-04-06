@@ -14,9 +14,6 @@ public class BooleanStringValidator implements ConstraintValidator<BooleanString
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return true; // Consider null as valid or adjust based on your requirements
-        }
         return value.equals("true") || value.equals("false");
     }
 }
