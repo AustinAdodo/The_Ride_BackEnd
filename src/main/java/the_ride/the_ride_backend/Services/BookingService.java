@@ -63,7 +63,7 @@ public class BookingService {
         } else {
             _MsgService.sendNotificationMessage(currentCustomer, "No Driver Found, Click Refresh.");
         }
-        if (!currentCustomer.BlackListedDriversIds.contains(DriverList.get(0).getId())) {
+        if (true) {
             currentDriver = DriverList.get(0);
             //send message "Driver found"
             //set status of driver to Driver.Occupied
@@ -75,3 +75,4 @@ public class BookingService {
         _driverService.mapDriver(currentCustomer, currentDriver);
     }
 }
+//if (!currentCustomer.BlackListedDriversIds.contains(DriverList.get(0).getId())) {

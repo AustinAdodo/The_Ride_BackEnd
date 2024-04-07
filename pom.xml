@@ -17,13 +17,16 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+
         <!-- Configure Hibernate -->
         <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
-        <dependency>
+        <!-- spring-boot-starter-data-jpa already manages Hibernate dependencies -->
+        <!--<dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.4.4.Final</version>
-        </dependency>
+        </dependency>-->
+
         <!-- Spring Boot AMQP Starter for RabbitMQ -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,7 +63,6 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -75,11 +77,11 @@
         </dependency>
 
         <!-- Postgres-->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.postgresql</groupId>-->
+<!--            <artifactId>postgresql</artifactId>-->
+<!--            <version>42.7.0</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
@@ -139,6 +141,7 @@
             <artifactId>spring-security-core</artifactId>
             <version>6.2.3</version>
         </dependency>
+
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.boot</groupId>-->
         <!--            <artifactId>spring-boot-starter-security</artifactId>-->
@@ -151,10 +154,20 @@
         <!--        </dependency>-->
         <!--        entityManagerFactory is essential for JPA to function properly as it manages the entity managers, -->
         <!--        responsible for interacting with the database entities-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- Hibernate Types -->
+        <!-- https://mvnrepository.com/artifact/com.vladmihalcea/hibernate-types-60 -->
+<!--        <dependency>-->
+<!--            <groupId>com.vladmihalcea</groupId>-->
+<!--            <artifactId>hibernate-types-60</artifactId>-->
+<!--            <version>2.21.1</version>-->
+<!--        </dependency>-->
+
         <!-- Jakarta Bean Validation API -->
         <dependency>
             <groupId>jakarta.validation</groupId>
