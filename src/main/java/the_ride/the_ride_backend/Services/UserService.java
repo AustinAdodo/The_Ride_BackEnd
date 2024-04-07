@@ -1,5 +1,6 @@
 package the_ride.the_ride_backend.Services;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
@@ -75,11 +76,17 @@ public class UserService {
 
     @Transactional
     public void add(Customer customer) {
-        if (customer != null && _userRepository != null) {this._userRepository.save(customer);}
+        assert customer != null;
+        if (StringUtils.isBlank(customer.isOnlyMySexAllowed)) {
+            customer.isOnlyMySexAllowed = "false";
+        }
+        if (_userRepository != null) {
+            this._userRepository.save(customer);
+        }
     }
 
     @Transactional
-    @Query(value = "SELECT * FROM customer", nativeQuery = true)
+    @Query(value = "SELECT * FROM customers", nativeQuery = true)
     public List<Customer> getAll() {
         List<Customer> all = new ArrayList<>();
         if (this._userRepository != null) {
@@ -94,7 +101,6 @@ public class UserService {
 
     @Transactional
     public Customer findById(UUID id) {
-            UUID Id = id;
-            return _userRepository.findById(id).get();
-        }
+        return _userRepository.findById(id).get();
+    }
 }
