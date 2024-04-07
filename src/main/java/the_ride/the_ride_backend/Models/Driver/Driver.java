@@ -14,7 +14,7 @@ import java.util.UUID;
 @Entity
 public class Driver extends UserBaseModel<UUID> {
     @jakarta.persistence.Id
-    @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
