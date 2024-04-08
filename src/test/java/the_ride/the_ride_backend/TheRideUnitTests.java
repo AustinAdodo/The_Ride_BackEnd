@@ -44,8 +44,8 @@ public class TheRideUnitTests {
         String createTableSQL = "IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'customers') BEGIN " +
                 "CREATE TABLE customers (" +
                 "ID UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY, " +
-                "firstName NVARCHAR(255), " +
-                "lastName NVARCHAR(255), " +
+                "firstName NVARCHAR(255) NOT NULL, " +
+                "lastName NVARCHAR(255) NOT NULL, " +
                 "middleName NVARCHAR(255), " +
                 "sex NVARCHAR(10), " +
                 "photourl NVARCHAR(MAX), " +
