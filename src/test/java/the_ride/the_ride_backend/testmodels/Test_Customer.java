@@ -9,7 +9,7 @@ import the_ride.the_ride_backend.Models.User.Customer;
 import java.util.UUID;
 
 @Entity
-@Table(name = "testCustomers")
+@Table(name = "test_Customers")
 public class Test_Customer extends Customer {
     public Test_Customer() {}
     public Test_Customer(String firstName, String lastName) {
