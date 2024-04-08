@@ -1,6 +1,6 @@
 # TheRideBackEnd
 
-This project was generated completely written with Java (Spring MVC).
+This project was completely written with Java (Spring MVC).
 
 ## Development server
 
