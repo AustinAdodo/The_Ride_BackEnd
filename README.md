@@ -10,7 +10,7 @@ RabbitMQ uses `port 5672` on localhost and websocket endpoint is `http://localho
 
 ## RabbitMQ Integration
 
-Ensure Erlang and rRabbitMQ are both installed on yor development machine and the installation is done with the administrator account to avoid complexities, by convention Erlang is installed before RabbitMQ.
+Ensure Erlang and RabbitMQ are both installed on your development machine and the installation is done with the administrator account to avoid complexities, by convention Erlang is installed before RabbitMQ.
 
 ## Testing
 It is important to note that H2 databases do not support UUID primary key persistence,if your preference is to configure an
