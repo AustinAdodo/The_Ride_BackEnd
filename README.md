@@ -15,6 +15,7 @@ Ensure Erlang and rRabbitMQ are both installed on yor development machine and th
 ## Testing
 It is important to note that H2 databases do not support UUID primary key persistence, MSSQL was utilised for testing for this reason.
    - ### Unit Tests
-     Unit Tests were configured using the inbuilt '@SpringBootTest' also ensure you use '@TestInstance(TestInstance.Lifecycle.PER_CLASS)'
+     Unit Tests were configured using the inbuilt `@SpringBootTest` also ensure you use `@TestInstance(TestInstance.Lifecycle.PER_CLASS)`
      to handle test class instances more efficiently. Mocking was utilised for full isolation of the repository class.
+     The test below simply checks if the `IsOnlyMySexAllowed` in the `Customer` class is correctly populated.
      ![The Ride Unit Test](https://drive.google.com/uc?export=view&id=1zD2tfFyFns76Vxaihx_iKkrEK8XSzE_W)
