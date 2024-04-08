@@ -2,6 +2,7 @@ package the_ride.the_ride_backend.testservices;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import the_ride.the_ride_backend.testmodels.Test_Customer;
@@ -14,7 +15,8 @@ import java.util.UUID;
 @Service
 public class Test_CustomerService {
     private final Test_CustomerRepository test_customerRepository;
-
+    
+    @Autowired
     public Test_CustomerService(Test_CustomerRepository testCustomerRepository) {
 
         test_customerRepository = testCustomerRepository;

@@ -1,6 +1,7 @@
 package the_ride.the_ride_backend.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import the_ride.the_ride_backend.Models.Driver.Driver;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 //import java.util.stream.Collectors;
 
+@Repository
 public interface DriverRepository extends JpaRepository<Driver, UUID> {
 
 //    @Query("SELECT d FROM Driver d WHERE d.latitude BETWEEN :minLat AND :maxLat " +
