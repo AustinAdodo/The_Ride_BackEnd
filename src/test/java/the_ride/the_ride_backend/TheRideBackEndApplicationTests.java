@@ -3,116 +3,126 @@ package the_ride.the_ride_backend;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import the_ride.the_ride_backend.Models.User.Customer;
-import the_ride.the_ride_backend.Services.UserService;
+import org.springframework.transaction.annotation.Transactional;
+import the_ride.the_ride_backend.testmodels.Test_Customer;
+import the_ride.the_ride_backend.testservices.Test_CustomerService;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-/**
- * '@RunWith(SpringRunner.class)' is from JUnit 4 and will not be used
- */
 
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TheRideBackEndApplicationTests {
+
     @Autowired
-    private UserService service;
-    @Value("${spring.datasource.url}")
-    private static String databaseUrl;
+    private JdbcTemplate jdbcTemplate;
 
-    // Connection and statement for database setup/teardown
-    private static Connection connection;
-    private static Statement statement;
-    private static final List<Customer> customers = new ArrayList<>();
+    @Autowired
+    private Test_CustomerService service;
 
-    /**
-     * Injects the mock Library.
-     */
     @Autowired
     private MockMvc mockMvc;
 
-    /**
-     * String In_memory_Connection = "jdbc:sqlite::memory:"; <- sqlite
-     */
-    @BeforeAll
-    public static void setUp() throws SQLException {
-        String inMemoryConnection = "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1";
-        //String inMemoryConnection = "jdbc:h2:mem:testdb;USER=sa;PASSWORD=";
-        connection = DriverManager.getConnection(inMemoryConnection, "sa", "");
-        statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS customer " +
-                "(id UUID DEFAULT RANDOM_UUID() PRIMARY KEY, firstname VARCHAR(255), lastname VARCHAR(255), " +
-                "isOnlyMySexAllowed VARCHAR(255), DefaultHomeAddress VARCHAR(255))");
-    }
-
-    @BeforeAll
-    public static void populateCustomers() {
-        customers.add(new Customer("Austin", "Adodo"));
-        customers.add(new Customer("Tony", "Kroos"));
-        customers.add(new Customer("Cristiano", "Ronaldo"));
-    }
+    private static final List<Test_Customer> customers = new ArrayList<>();
 
     @BeforeEach
     public void clearDB() {
         service.clear();
     }
 
+    @BeforeEach
+    public void populateCustomers() {
+        customers.add(new Test_Customer("Austin", "Adodo"));
+        customers.add(new Test_Customer("Tony", "Kroos"));
+        customers.add(new Test_Customer("Cristiano", "Ronaldo"));
+        for (Test_Customer customer : customers) {
+            customer.setId(UUID.randomUUID());
+            customer.setIsOnlyMySexAllowed("false");
+        }
+    }
+
+    @BeforeEach
+    @Transactional
+    public void setupDatabase() {
+        String createTableSQL = "IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'testCustomers') BEGIN " +
+                "CREATE TABLE testCustomers (" +
+                "ID UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY, " +
+                "firstName NVARCHAR(255), " +
+                "lastName NVARCHAR(255), " +
+                "middleName NVARCHAR(255), " +
+                "sex NVARCHAR(10), " +
+                "photourl NVARCHAR(MAX), " +
+                "Rating INT, " +
+                "TotalTrips INT, " +
+                "Password NVARCHAR(255), " +
+                "email NVARCHAR(255), " +
+                "Username NVARCHAR(255), " +
+                "DateOfBirth DATE, " +
+                "status NVARCHAR(255), " +
+                "address NVARCHAR(MAX), " +
+                "Category NVARCHAR(255), " +
+                "Usertype NVARCHAR(255), " +
+                "currentLongitude NVARCHAR(255), " +
+                "currentLatitude NVARCHAR(255), " +
+                "is_only_my_sex_allowed NVARCHAR(50), " +
+                "default_home_address NVARCHAR(MAX)" +
+                ");" +
+                "INSERT INTO testCustomers (firstName, lastName, is_only_my_sex_allowed) VALUES ('test-firstname', 'test-lastname'" +
+                ",'false');" +
+                "END";
+        jdbcTemplate.execute(createTableSQL);
+    }
+
     @AfterAll
-    public static void tearDown() throws SQLException {
-        // Drop the 'customer' table
-        statement.execute("DROP TABLE customer");
-        statement.close();
-        connection.close();
+    public static void tearDown() {
+//        teardown not necessary if using 'create-drop' for the Hibernate ddl-auto setting.
     }
 
     public void addCustomers() {
-        for (Customer customer : customers) {
-            service.add(customer);
+        for (Test_Customer customer : customers) {
+            this.service.add(customer);
         }
     }
 
     @Test
-    public void shouldAllowSavingOfCustomer_Modified_UTF_8() throws Exception {
-        var mocker = this.mockMvc;
-        for (Customer customer : customers) {
-            this.mockMvc.perform(post("/customers")
+    public void shouldAllowSavingOfCustomer() throws Exception {
+        for (Test_Customer customer : customers) {
+            this.mockMvc.perform(post("/test_customers")
                             .content(asJsonString(customer))
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andExpect(jsonPath("firstname", is(customer.getFullName().split(" ")[0])));
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.firstname", is(customer.getFirstName())));
         }
     }
 
     @Test
     public void shouldLetUsPostCustomers() throws Exception {
-        for (Customer customer : customers) {
-            this.mockMvc.perform(post("/customers")
+        for (Test_Customer customer : customers) {
+            if (customer.getFirstName() == null || customer.getLastName() == null) {
+                throw new IllegalArgumentException("Customer data incomplete: " + asJsonString(customer));
+            }
+            this.mockMvc.perform(post("/test_customers")
                             .content(asJsonString(customer))
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8)) //TestUtil.APPLICATION_JSON_UTF8
-                    .andExpect(jsonPath("firstname", is(customer.getFullName().split(" ")[0])));
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.firstName", is(customer.getFirstName())));
         }
     }
 
@@ -120,30 +130,29 @@ class TheRideBackEndApplicationTests {
     public void shouldAllowUpdatingCustomers() throws Exception {
         addCustomers();
         String name = "Another Name";
-        List<Customer> all = this.service.getAll();
-        Customer customer = this.service.getAll().get(0);
+        List<Test_Customer> all = this.service.getAll();
+        Test_Customer customer = all.get(0);
         customer.setName(name);
-        this.mockMvc.perform(put("/customers/" + customer.getId())
+        this.mockMvc.perform(put("/test_customers/" + customer.getId())
                         .content(asJsonString(customer))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
-        Customer actual = this.service.findById(customer.getId());
-        assertEquals("Should have updated the customer", actual.getFullName(), name);
+        Test_Customer actual = this.service.findById(customer.getId());
+        Assertions.assertEquals(actual.getFullName(), name, "Should have updated the customer");
     }
 
     public static String asJsonString(final Object obj) {
         try {
-            final ObjectMapper mapper = new ObjectMapper();
-            return mapper.writeValueAsString(obj);
+            return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
 }
 
 
-
-
-
+//    List<Test_Customer> all = customers.stream()
+//            .filter(Test_Customer.class::isInstance)
+//            .map(Test_Customer.class::cast)
+//            .toList();

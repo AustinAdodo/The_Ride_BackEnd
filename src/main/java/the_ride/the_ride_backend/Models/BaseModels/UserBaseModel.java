@@ -36,20 +36,20 @@ import the_ride.the_ride_backend.Models.User.Customer;
 public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T> {
     @NotNull
     @Size(min = 1)
-    public String firstName;
+    public String firstName = "Unknown";
+    @NotNull @Size(min = 1)
+    public String lastName = "Unknown";
     public String photourl;
     public String sex;
     public Integer Rating;
     public String middleName;
-    @NotNull @Size(min = 1)
-    public String lastName;
     public int TotalTrips;
     public String Password;
     public String email;
     private String Username;
     public LocalDate DateOfBirth;
     public String status;
-    public String address;
+    public String address = "address";
     public String Category;
     public String Usertype;
     public String currentLongitude;

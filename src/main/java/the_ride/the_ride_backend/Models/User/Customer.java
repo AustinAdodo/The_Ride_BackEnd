@@ -1,25 +1,38 @@
 package the_ride.the_ride_backend.Models.User;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
 import the_ride.the_ride_backend.Utiities.BooleanString;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "customer")
+@Getter
+@Setter
+@Table(name = "customers")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Customer extends UserBaseModel<UUID> {
-    @jakarta.persistence.Id
-    @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 
-    @BooleanString
-    public String isOnlyMySexAllowed;
+    @PrePersist
+    protected void ensureIdAssigned() {
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
+    }
 
+    @BooleanString
+    @Column(name = "is_only_my_sex_allowed")
+    public String isOnlyMySexAllowed = "false";
+
+    @Column(name = "default_home_address")
     public String DefaultHomeAddress = this.address;
 
     @Override
@@ -42,7 +55,11 @@ public class Customer extends UserBaseModel<UUID> {
         super("customer");
     }
 
+    public void setIsOnlyMySexAllowed(String aFalse) {
+        this.isOnlyMySexAllowed = aFalse;
+    }
+
     //blacklisted drivers
-    @ElementCollection(fetch = FetchType.LAZY)
-    public List<UUID> BlackListedDriversIds;
+//    @ElementCollection(fetch = FetchType.LAZY)
+//    public List<UUID> BlackListedDriversIds;
 }

@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 public class CustomerController {
     private final UserService service;
+
     public CustomerController(UserService service) {
         this.service = service;
     }
@@ -25,7 +26,7 @@ public class CustomerController {
             HttpHeaders headers = new HttpHeaders();
             this.service.add(customer);
             headers.add(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8");
-            return new ResponseEntity<>(customer, headers, HttpStatus.OK);
+            return new ResponseEntity<>(customer, headers, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(new Customer(), HttpStatus.NOT_FOUND);
     }
@@ -37,4 +38,5 @@ public class CustomerController {
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8");
         return new ResponseEntity<>(customers, headers, HttpStatus.OK);
     }
+
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
 public abstract class BaseModel<PrimaryKey extends Serializable> implements IModel<PrimaryKey> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected PrimaryKey id;
 
 
