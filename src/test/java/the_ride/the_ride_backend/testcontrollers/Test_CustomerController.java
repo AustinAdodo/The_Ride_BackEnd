@@ -50,7 +50,6 @@ public class Test_CustomerController {
         if (updatedPerson== null || areAllParametersEmpty(headers, contentType, forwarded)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         try {
             this.service.UpdateCustomer(updatedPerson);
             if (!resourceExists(id)) {

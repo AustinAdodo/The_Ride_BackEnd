@@ -5,7 +5,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,11 +15,9 @@ import the_ride.the_ride_backend.testservices.Test_CustomerService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
@@ -40,30 +37,14 @@ class TheRideBackEndApplicationTests {
 
     private static final List<Test_Customer> customers = new ArrayList<>();
 
-    @BeforeEach
-    public void clearDB() {
-        service.clear();
-    }
-
-    @BeforeEach
-    public void populateCustomers() {
-        customers.add(new Test_Customer("Austin", "Adodo"));
-        customers.add(new Test_Customer("Tony", "Kroos"));
-        customers.add(new Test_Customer("Cristiano", "Ronaldo"));
-        for (Test_Customer customer : customers) {
-            customer.setId(UUID.randomUUID());
-            customer.setIsOnlyMySexAllowed("false");
-        }
-    }
-
-    @BeforeEach
+    @BeforeAll
     @Transactional
     public void setupDatabase() {
-        String createTableSQL = "IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'testCustomers') BEGIN " +
-                "CREATE TABLE testCustomers (" +
+        String createTableSQL = "IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'test_Customers') BEGIN " +
+                "CREATE TABLE test_Customers (" +
                 "ID UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY, " +
-                "firstName NVARCHAR(255), " +
-                "lastName NVARCHAR(255), " +
+                "firstName NVARCHAR(255) NOT NULL, " +
+                "lastName NVARCHAR(255) NOT NULL, " +
                 "middleName NVARCHAR(255), " +
                 "sex NVARCHAR(10), " +
                 "photourl NVARCHAR(MAX), " +
@@ -82,10 +63,25 @@ class TheRideBackEndApplicationTests {
                 "is_only_my_sex_allowed NVARCHAR(50), " +
                 "default_home_address NVARCHAR(MAX)" +
                 ");" +
-                "INSERT INTO testCustomers (firstName, lastName, is_only_my_sex_allowed) VALUES ('test-firstname', 'test-lastname'" +
+                "INSERT INTO test_Customers (firstName, lastName, is_only_my_sex_allowed) VALUES ('test-firstname', 'test-lastname'" +
                 ",'false');" +
                 "END";
         jdbcTemplate.execute(createTableSQL);
+    }
+
+    @BeforeEach
+    public void clearDB() {
+        service.clear();
+    }
+
+    @BeforeEach
+    public void populateCustomers() {
+        customers.add(new Test_Customer("Austin", "Adodo"));
+        customers.add(new Test_Customer("Tony", "Kroos"));
+        customers.add(new Test_Customer("Cristiano", "Ronaldo"));
+        for (Test_Customer customer : customers) {
+            customer.setIsOnlyMySexAllowed("false");
+        }
     }
 
     @AfterAll
@@ -106,22 +102,7 @@ class TheRideBackEndApplicationTests {
                             .content(asJsonString(customer))
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.firstname", is(customer.getFirstName())));
-        }
-    }
-
-    @Test
-    public void shouldLetUsPostCustomers() throws Exception {
-        for (Test_Customer customer : customers) {
-            if (customer.getFirstName() == null || customer.getLastName() == null) {
-                throw new IllegalArgumentException("Customer data incomplete: " + asJsonString(customer));
-            }
-            this.mockMvc.perform(post("/test_customers")
-                            .content(asJsonString(customer))
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                     .andExpect(jsonPath("$.firstName", is(customer.getFirstName())));
         }
     }
@@ -139,7 +120,19 @@ class TheRideBackEndApplicationTests {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
         Test_Customer actual = this.service.findById(customer.getId());
-        Assertions.assertEquals(actual.getFullName(), name, "Should have updated the customer");
+        String ActualName = actual.getFullName();
+        Assertions.assertEquals(name, ActualName, "Should have updated the customer");
+    }
+
+    @Test
+    public void shouldAllowUsToRemoveArticles() throws Exception {
+        addCustomers();
+        List<Test_Customer> all = new ArrayList<Test_Customer>(this.service.getAll());
+        for (Test_Customer customer : all) {
+            this.mockMvc.perform(delete("/test_customers/" + customer.getId()))
+                    .andExpect(status().isNoContent());
+        }
+        Assertions.assertEquals(0, this.service.getAll().size(), "Should remove all customers");
     }
 
     public static String asJsonString(final Object obj) {
@@ -150,8 +143,6 @@ class TheRideBackEndApplicationTests {
         }
     }
 }
-
-
 //    List<Test_Customer> all = customers.stream()
 //            .filter(Test_Customer.class::isInstance)
 //            .map(Test_Customer.class::cast)
