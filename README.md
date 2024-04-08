@@ -13,7 +13,8 @@ RabbitMQ uses `port 5672` on localhost and websocket endpoint is `http://localho
 Ensure Erlang and rRabbitMQ are both installed on yor development machine and the installation is done with the administrator account to avoid complexities, by convention Erlang is installed before RabbitMQ.
 
 ## Testing
-It is important to note that H2 databases do not support UUID primary key persistence, MSSQL was utilised for testing for this reason.
+It is important to note that H2 databases do not support UUID primary key persistence,if your preference is to configure an
+internal memory for unit testing. MSSQL was utilised for testing for this reason.
    - ### Unit Tests
      Unit Tests were configured using the inbuilt `@SpringBootTest` also ensure you use `@TestInstance(TestInstance.Lifecycle.PER_CLASS)`
      to handle test class instances more efficiently. Mocking was utilised for full isolation of the repository class.
