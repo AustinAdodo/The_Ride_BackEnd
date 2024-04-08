@@ -25,4 +25,5 @@ It is important to note that H2 databases do not support UUID primary key persis
       `The MockMvc` library ws used for mocking REST verbs ('GET','POST','PUT' etc.) for integration tests.
        These tests have been completely isolated from the main classes (in this case the class `Test_Customers` was used) 
        but a real database was utilised.
+       The integration tests check the `HTTPPOST` `HTTPPUT` methods at a controller level.
       See the integration tests [here](https://github.com/AustinAdodo/The_Ride_BackEnd/blob/main/src/test/java/the_ride/the_ride_backend/TheRideBackEndApplicationTests.java) 
