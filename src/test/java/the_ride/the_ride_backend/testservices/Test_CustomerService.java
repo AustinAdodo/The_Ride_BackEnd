@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Service
 public class Test_CustomerService {
+    @Autowired
     private final Test_CustomerRepository test_customerRepository;
 
     @Autowired
@@ -33,7 +34,12 @@ public class Test_CustomerService {
             customer.isOnlyMySexAllowed = "false";
         }
         if (test_customerRepository != null) {
-            this.test_customerRepository.save(customer);
+            try {
+                this.test_customerRepository.save(customer);
+            } catch (Exception e) {
+                Test_CustomerRepository.logger().error("Error saving customer: ", e);
+                throw e;
+            }
         }
     }
 
@@ -47,8 +53,7 @@ public class Test_CustomerService {
         if (!all.isEmpty()) {
             return all;
         }
-        List<Test_Customer> emptyList = new ArrayList<>();
-        return emptyList;
+        return new ArrayList<>();
     }
 
     @Transactional
@@ -66,7 +71,7 @@ public class Test_CustomerService {
     @Transactional
     public void remove(UUID id) {
         try {
-            Test_Customer customer= findById(id);
+            Test_Customer customer = findById(id);
             test_customerRepository.delete(customer);
         } catch (Exception e) {
             throw e;
