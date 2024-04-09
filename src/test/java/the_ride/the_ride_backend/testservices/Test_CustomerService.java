@@ -35,7 +35,10 @@ public class Test_CustomerService {
         }
         if (test_customerRepository != null) {
             try {
-                this.test_customerRepository.save(customer);
+                Test_Customer savedCustomer = test_customerRepository.save(customer);
+                if (savedCustomer.getId() != null) {
+                    System.out.println("Customer saved successfully with ID: " + savedCustomer.getId());
+                }
             } catch (Exception e) {
                 Test_CustomerRepository.logger().error("Error saving customer: ", e);
                 throw e;
