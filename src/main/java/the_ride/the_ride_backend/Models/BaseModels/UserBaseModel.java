@@ -1,5 +1,6 @@
 package the_ride.the_ride_backend.Models.BaseModels;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -36,9 +37,11 @@ import the_ride.the_ride_backend.Models.User.Customer;
 public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T> {
     @NotNull
     @Size(min = 1)
-    public String firstName = "Unknown";
+    @Column(name = "firstName", nullable = false)
+    public String firstName;
     @NotNull @Size(min = 1)
-    public String lastName = "Unknown";
+    @Column(name = "lastName", nullable = false)
+    public String lastName;
     public String photourl;
     public String sex;
     public Integer Rating;
@@ -49,7 +52,7 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     private String Username;
     public LocalDate DateOfBirth;
     public String status;
-    public String address = "address";
+    public String address;
     public String Category;
     public String Usertype;
     public String currentLongitude;

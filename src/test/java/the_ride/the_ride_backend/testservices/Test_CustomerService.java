@@ -58,13 +58,22 @@ public class Test_CustomerService {
 
     @Transactional
     public Test_Customer findById(UUID id) {
-        return test_customerRepository.findById(id).get();
+        try {
+            return test_customerRepository.findById(id).get();
+        } catch (Exception e) {
+            Test_CustomerRepository.logger().error("Error saving customer: ", e);
+            throw e;
+        }
     }
 
     @Transactional
     public void UpdateCustomer(Test_Customer customer) {
         if (this.test_customerRepository != null) {
-            test_customerRepository.save(customer);
+            try {
+                test_customerRepository.save(customer);
+            } catch (Exception e) {
+                Test_CustomerRepository.logger().error("Error saving customer: ", e);
+            }
         }
     }
 
@@ -74,6 +83,7 @@ public class Test_CustomerService {
             Test_Customer customer = findById(id);
             test_customerRepository.delete(customer);
         } catch (Exception e) {
+            Test_CustomerRepository.logger().error("Error saving customer: ", e);
             throw e;
         }
     }
