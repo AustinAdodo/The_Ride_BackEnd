@@ -1,6 +1,6 @@
 package the_ride.the_ride_backend.Models;
 
-public class Payload {
+public class ModelPayload {
 
     public String name = "Driver";
     public String phoneNumber = "xxx";

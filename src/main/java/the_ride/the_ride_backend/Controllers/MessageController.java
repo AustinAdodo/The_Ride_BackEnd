@@ -7,7 +7,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import the_ride.the_ride_backend.Models.Payload;
+import the_ride.the_ride_backend.Models.ModelPayload;
 import the_ride.the_ride_backend.Services.MessagePublisher;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,7 +34,7 @@ public class MessageController {
 
     @MessageMapping("/acceptTrip")
     @SendTo("/topic/driverUpdates")
-    public Payload processAcceptTrip(Payload driverDetails) {
+    public ModelPayload processAcceptTrip(ModelPayload driverDetails) {
         try {
             String message = objectMapper.writeValueAsString(driverDetails);
             messagePublisher.sendRequestMessage(message);
@@ -46,7 +46,7 @@ public class MessageController {
 
     @MessageMapping("/trip/Request")
     @SendTo("/topic/customer")
-    public Payload processRequestTrip(Payload customerDetails) {
+    public ModelPayload processRequestTrip(ModelPayload customerDetails) {
         try {
             String message = objectMapper.writeValueAsString(customerDetails);
             messagePublisher.sendRequestMessage(message);
@@ -56,17 +56,17 @@ public class MessageController {
         return customerDetails;
     }
 
-    public void broadcastDriverTopic(Payload message) {
+    public void broadcastDriverTopic(ModelPayload message) {
         template.convertAndSend("/topic/driverUpdates", message);
     }
 
-    public void broadcastUserTopic(Payload message) {
+    public void broadcastUserTopic(ModelPayload message) {
         template.convertAndSend("/topic/customer", message);
     }
 
     @RabbitListener(queues = "${rabbitmq.queue}")
     public void receiveMessageFromRabbitMQ(String message) {
-        Payload tripMessage = convertStringToTripMessage(message);
+        ModelPayload tripMessage = convertStringToTripMessage(message);
         assert tripMessage != null;
         if ("driverUpdates".equals(tripMessage.topic)) {
             tripMessage.status = "Back-End Processed Successfully";
@@ -79,9 +79,9 @@ public class MessageController {
         }
     }
 
-    private Payload convertStringToTripMessage(String message) {
+    private ModelPayload convertStringToTripMessage(String message) {
         try {
-            return objectMapper.readValue(message, Payload.class);
+            return objectMapper.readValue(message, ModelPayload.class);
         } catch (JsonProcessingException e) {
             logger.error("Error deserializing message from RabbitMQ: ", e);
             return null;
