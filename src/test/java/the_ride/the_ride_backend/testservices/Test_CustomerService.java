@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import the_ride.the_ride_backend.testmodels.Test_Customer;
 import the_ride.the_ride_backend.testrepositories.Test_CustomerRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +19,8 @@ import java.util.UUID;
 public class Test_CustomerService {
     @Autowired
     private final Test_CustomerRepository test_customerRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     public Test_CustomerService(Test_CustomerRepository testCustomerRepository) {
@@ -27,7 +32,7 @@ public class Test_CustomerService {
         this.test_customerRepository.flush();
     }
 
-    @Transactional
+    @Transactional //@ControllerAdvice
     public void add(Test_Customer customer) {
         assert customer != null;
         if (StringUtils.isBlank(customer.isOnlyMySexAllowed)) {
@@ -35,9 +40,13 @@ public class Test_CustomerService {
         }
         if (test_customerRepository != null) {
             try {
+                assert customer.getFirstName() != null : "First name must not be null";
+                entityManager.flush();
                 Test_Customer savedCustomer = test_customerRepository.save(customer);
                 if (savedCustomer.getId() != null) {
-                    System.out.println("Customer saved successfully with ID: " + savedCustomer.getId());
+                    System.out.println("Customer saved successfully with ID, first name, last name:" +
+                            " " + savedCustomer.getId() + " and " + savedCustomer.getFirstName() + " " +
+                            savedCustomer.getLastName());
                 }
             } catch (Exception e) {
                 Test_CustomerRepository.logger().error("Error saving customer: ", e);

@@ -59,7 +59,10 @@ public class Customer extends UserBaseModel<UUID> {
         this.isOnlyMySexAllowed = aFalse;
     }
 
-    //blacklisted drivers
-//    @ElementCollection(fetch = FetchType.LAZY)
-//    public List<UUID> BlackListedDriversIds;
+    /*
+blacklisted drivers
+    @ElementCollection(fetch = FetchType.LAZY)
+    public List<UUID> BlackListedDriversIds;
+    //@PrePersist, @PostLoad, @PreUpdate
+*/
 }

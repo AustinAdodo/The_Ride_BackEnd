@@ -1,6 +1,5 @@
 package the_ride.the_ride_backend.Models.BaseModels;
 
-//import javax.persistence.Column;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
