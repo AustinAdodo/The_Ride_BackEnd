@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import the_ride.the_ride_backend.testmodels.Test_Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
