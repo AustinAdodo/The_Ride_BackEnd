@@ -79,7 +79,6 @@ public class DriverService {
         Person.status = "Online";
         Person.Usertype = Person.getDetectedUsertype();
         Person.TotalTrips = 0;
-        Person.carModel = "Toyota 2002";
         Person.totalEarnings = BigDecimal.valueOf(0.0);
         Person.TaxID = "AAA1444Y";
         Person.Rating = 0;

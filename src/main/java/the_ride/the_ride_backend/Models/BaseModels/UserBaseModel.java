@@ -69,10 +69,6 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
         return this.Username != null ? this.Username : this.email;
     }
 
-    public void setUsername(String username) {
-        this.Username = username;
-    }
-
     @Override
     public T getId() {
         return id;
