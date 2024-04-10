@@ -46,7 +46,7 @@ public class DriverService {
     }
 
     public List<Driver> getAll() {
-        return new ArrayList<Driver>();
+        return new ArrayList<>();
     }
 
     /**
@@ -68,7 +68,6 @@ public class DriverService {
     public void registerDriver(UserBaseModel<UUID> Person) {
         // Encode the password before setting it
         Driver driver = new Driver();
-        driver.setPassword(passwordEncoder.encode(Person.password));
         driver.status = "Online";
         driver.Usertype = Person.Usertype;
         driver.TotalTrips = 0;
