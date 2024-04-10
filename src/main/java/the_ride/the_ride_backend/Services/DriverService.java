@@ -68,7 +68,7 @@ public class DriverService {
     public void registerDriver(UserBaseModel<UUID> Person) {
         // Encode the password before setting it
         Driver driver = new Driver();
-        driver.setPassword(passwordEncoder.encode(Person.Password));
+        driver.setPassword(passwordEncoder.encode(Person.password));
         driver.status = "Online";
         driver.Usertype = Person.Usertype;
         driver.TotalTrips = 0;
@@ -80,7 +80,7 @@ public class DriverService {
         driver.Rating = 0;
         driver.RegistrationStatus = "Active";
         driver.email = Person.email;
-        Person.setPassword(passwordEncoder.encode(Person.Password));
+        Person.setPassword(passwordEncoder.encode(Person.password));
         _driverRepository.save(driver);
     }
 

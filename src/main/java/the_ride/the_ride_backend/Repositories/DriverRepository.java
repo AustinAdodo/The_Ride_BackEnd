@@ -28,17 +28,18 @@ public interface DriverRepository extends JpaRepository<Driver, UUID> {
                                                          @Param("minLon") double minLon,
                                                          @Param("maxLon") double maxLon) {
         List<Driver> sampleDrivers = new ArrayList<>();
-        Driver driver1 = new Driver("John", "Smith", "123 Main St", 6.4215, 3.3415, "red");
-        Driver driver2 = new Driver("Alice", "Murray", "456 Oak Ave", 6.4215, 3.3415, "yellow");
-        Driver driver3 = new Driver("Austin", "Adodo", "789 Elm St", 6.4215, 3.3415, "blue");
+        Driver driver1 = new Driver("John", "Smith", "123 Main St", "6.4215", "3.3415", "red");
+        Driver driver2 = new Driver("Alice", "Murray", "456 Oak Ave", "6.4215", "3.3415", "yellow");
+        Driver driver3 = new Driver("Austin", "Adodo", "789 Elm St", "6.4215", "3.3415", "blue");
 
         sampleDrivers.add(driver1);
         sampleDrivers.add(driver2);
         sampleDrivers.add(driver3);
-        List<Driver> result = sampleDrivers.stream()
-                .filter(driver -> driver.getLatitude() >= minLat && driver.getLatitude() <= maxLat &&
-                        driver.getLongitude() >= minLon && driver.getLongitude() <= maxLon)
+        return sampleDrivers.stream()
+                .filter(driver -> Double.parseDouble(driver.getCurrentLatitude()) >= minLat &&
+                        Double.parseDouble(driver.getCurrentLatitude()) <= maxLat &&
+                        Double.parseDouble(driver.getCurrentLongitude()) >= minLon &&
+                        Double.parseDouble(driver.getCurrentLongitude()) <= maxLon)
                 .toList();
-        return result;
     }
 }
