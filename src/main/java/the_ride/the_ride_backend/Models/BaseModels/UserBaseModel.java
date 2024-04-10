@@ -19,7 +19,7 @@ import java.time.LocalDate;
 /**
  * annotations @JsonTypeInfo and @JsonSubTypes are used for handling polymorphic types during serialization
  * and deserialization.
- * '@Inheritance(strategy' = InheritanceType.TABLE_PER_CLASS)' wasn't used  because it rendered an incomplete
+ * '@Inheritance'('strategy' = InheritanceType.TABLE_PER_CLASS)' wasn't used  because it rendered an incomplete
  * mapping to child classes.
  */
 @JsonTypeInfo(
