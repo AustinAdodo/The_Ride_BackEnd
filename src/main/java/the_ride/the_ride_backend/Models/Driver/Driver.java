@@ -14,7 +14,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "drivers")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Driver extends UserBaseModel<UUID> {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -26,10 +25,12 @@ public class Driver extends UserBaseModel<UUID> {
     public UUID getId() {
         return id;
     }
+
     @Override
     public void setId(UUID id) {
         this.id = id;
     }
+
     public String carModel;
     public String TaxID;
     public BigDecimal totalEarnings = BigDecimal.ZERO;
@@ -50,7 +51,7 @@ public class Driver extends UserBaseModel<UUID> {
         this.lastName = lastname;
         this.address = address;
         this.currentLongitude = Long;
-        this.currentLatitude =latitude;
+        this.currentLatitude = latitude;
         this.carColor = vehicleColor;
     }
 }

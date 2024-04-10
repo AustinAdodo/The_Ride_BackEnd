@@ -1,24 +1,26 @@
 package the_ride.the_ride_backend.Models.BaseModels;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import the_ride.the_ride_backend.Models.Driver.Driver;
 import the_ride.the_ride_backend.Models.User.Customer;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+
 /**
  * annotations @JsonTypeInfo and @JsonSubTypes are used for handling polymorphic types during serialization
- * and deserialization
+ * and deserialization.
+ * '@Inheritance(strategy' = InheritanceType.TABLE_PER_CLASS)' wasn't used  because it rendered an incomplete
+ * mapping to child classes.
  */
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -33,6 +35,7 @@ import the_ride.the_ride_backend.Models.User.Customer;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@MappedSuperclass
 public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T> {
     @NotNull
     @Size(min = 1)

@@ -13,7 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "customers")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Customer extends UserBaseModel<UUID> {
     @Id
     @GeneratedValue(generator = "UUID")

@@ -1,5 +1,8 @@
 package the_ride.the_ride_backend.Services;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,10 +14,7 @@ import the_ride.the_ride_backend.Repositories.DriverRepository;
 import the_ride.the_ride_backend.Utiities.LocationUtils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class DriverService {
@@ -23,6 +23,10 @@ public class DriverService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private Validator validator;
+
     private final MessagingService _messagingService;
 
     public DriverService(DriverRepository driverRepository, MessagingService messagingService) {
@@ -80,7 +84,15 @@ public class DriverService {
         Person.TaxID = "AAA1444Y";
         Person.Rating = 0;
         Person.RegistrationStatus = ("Active");
-        _driverRepository.save(Person);
+        Set<ConstraintViolation<Driver>> violations = validator.validate(Person);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+        try {
+            _driverRepository.save(Person);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public void add(Driver driver) {
