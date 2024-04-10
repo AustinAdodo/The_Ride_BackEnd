@@ -37,12 +37,12 @@ public class UserService {
         user.isOnlyMySexAllowed = Person.isOnlyMySexAllowed;
         user.DefaultHomeAddress = Person.address;
         user.address = Person.address;
-        user.setPassword(passwordEncoder.encode(Person.Password));
+        user.setPassword(passwordEncoder.encode(Person.password));
         user.status = Person.status;
         user.TotalTrips = 0;
         user.Rating = 0;
         user.email = Person.email;
-        user.setPassword(passwordEncoder.encode(Person.Password));
+        user.setPassword(passwordEncoder.encode(Person.password));
         _userRepository.save(user);
     }
 

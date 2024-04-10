@@ -8,7 +8,6 @@ import lombok.Getter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -42,12 +41,12 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     @NotNull @Size(min = 1)
     @Column(name = "lastName", nullable = false)
     public String lastName;
-    public String photourl;
+    public String photograph;
     public String sex;
     public Integer Rating;
     public String middleName;
     public int TotalTrips;
-    public String Password;
+    public String password;
     public String email;
     private String Username;
     public LocalDate DateOfBirth;
@@ -81,7 +80,7 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     }
 
     public void setPassword(String password) {
-        this.Password = password;
+        this.password = password;
     }
 
     public void setName(String name) {
