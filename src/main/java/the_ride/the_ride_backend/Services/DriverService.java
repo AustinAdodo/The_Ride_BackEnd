@@ -1,7 +1,9 @@
 package the_ride.the_ride_backend.Services;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
 import the_ride.the_ride_backend.Models.Driver.Driver;
 import the_ride.the_ride_backend.Models.User.Customer;
@@ -22,14 +24,15 @@ public class DriverService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    private final  MessagingService _messagingService;
+    private final MessagingService _messagingService;
+
     public DriverService(DriverRepository driverRepository, MessagingService messagingService) {
         _driverRepository = driverRepository;
         _messagingService = messagingService;
     }
 
     public void mapDriver(Customer customer, Driver driver) {
-        BookingMapper.put(customer.getId(),driver.getId());
+        BookingMapper.put(customer.getId(), driver.getId());
     }
 
     public boolean isMapped(Customer customer, Driver driver) {
@@ -37,7 +40,7 @@ public class DriverService {
     }
 
     public boolean AcceptOrDeclineTrip(Customer customer) {
-        _messagingService.sendAcceptOrRejectMessage(customer,"Rejected");
+        _messagingService.sendAcceptOrRejectMessage(customer, "Rejected");
         return true;
     }
 
@@ -51,7 +54,7 @@ public class DriverService {
 
     /**
      * Gets Drivers within proximity of a requesting customer
-    */
+     */
 
     public List<Driver> getDriversWithinProximity(double latitude, double longitude, double proximityDistance) {
         double[] boundingBox = LocationUtils.calculateBoundingBox(latitude, longitude, proximityDistance);
@@ -65,7 +68,8 @@ public class DriverService {
         return _driverRepository.findDriversInBoundingBox(minLat, maxLat, minLon, maxLon);
     }
 
-    public void registerDriver(UserBaseModel<UUID> Person) {
+    @Transactional
+    public void registerDriver(@NotNull Driver Person) {
         // Encode the password before setting it
         Driver driver = new Driver();
         driver.status = "Online";
@@ -80,6 +84,8 @@ public class DriverService {
         driver.RegistrationStatus = "Active";
         driver.email = Person.email;
         Person.setPassword(passwordEncoder.encode(Person.password));
+        driver.setId(UUID.randomUUID());
+        //session.persist(driver);
         _driverRepository.save(driver);
     }
 
