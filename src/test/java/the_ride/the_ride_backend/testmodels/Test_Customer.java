@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "test_Customers")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Test_Customer extends Customer {
     public Test_Customer() {}
     public Test_Customer(String firstName, String lastName) {

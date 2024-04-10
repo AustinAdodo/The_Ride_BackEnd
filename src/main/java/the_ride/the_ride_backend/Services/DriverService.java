@@ -2,14 +2,13 @@ package the_ride.the_ride_backend.Services;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
 import the_ride.the_ride_backend.Models.Driver.Driver;
 import the_ride.the_ride_backend.Models.User.Customer;
 import the_ride.the_ride_backend.Repositories.DriverRepository;
 import the_ride.the_ride_backend.Utiities.LocationUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -71,22 +70,17 @@ public class DriverService {
     @Transactional
     public void registerDriver(@NotNull Driver Person) {
         // Encode the password before setting it
-        Driver driver = new Driver();
-        driver.status = "Online";
-        driver.Usertype = Person.Usertype;
-        driver.TotalTrips = 0;
-        driver.carModel = "Toyota 2002";
-        driver.totalEarnings = BigDecimal.valueOf(0.0);
-        driver.TaxID = "AAA1444Y";
-        driver.address = Person.address;
-        driver.VehiclePlateNumber = "CC1AA2";
-        driver.Rating = 0;
-        driver.RegistrationStatus = "Active";
-        driver.email = Person.email;
+        Person.setId(UUID.randomUUID());
         Person.setPassword(passwordEncoder.encode(Person.password));
-        driver.setId(UUID.randomUUID());
-        //session.persist(driver);
-        _driverRepository.save(driver);
+        Person.status = "Online";
+        Person.Usertype = Person.getDetectedUsertype();
+        Person.TotalTrips = 0;
+        Person.carModel = "Toyota 2002";
+        Person.totalEarnings = BigDecimal.valueOf(0.0);
+        Person.TaxID = "AAA1444Y";
+        Person.Rating = 0;
+        Person.RegistrationStatus = ("Active");
+        _driverRepository.save(Person);
     }
 
     public void add(Driver driver) {

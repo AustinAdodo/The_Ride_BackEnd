@@ -14,6 +14,8 @@ public class TransactionEventListenerIntegrator implements Integrator {
     /**
      * a custom insert listener is registered in eventListenerRegistry.appendListeners
      * Other Event Listeners include  POST_COMMIT_UPDATE and POST_COMMIT_DELETE.
+     *  Spring’s TransactionSynchronizationManager allows for detailed transaction synchronization callbacks
+     *  that are aware of the transaction context, including successful commit and rollback scenarios.
      */
 
     @Override
