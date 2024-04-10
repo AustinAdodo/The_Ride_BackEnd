@@ -54,11 +54,12 @@ public class HomeController {
 
     @PostMapping("/signup")
     public ResponseEntity<Boolean> signUp(@Valid @RequestBody UserBaseModel<UUID> person) {
-            if ("Customer".equals(person.Usertype)) {
+            String userType = person.getDetectedUsertype();
+            if ("Customer".equals(userType)) {
                 Customer customer = (Customer) person;
                 _userService.registerUser(customer);
                 return ResponseEntity.ok().build();
-            } else if ("Driver".equals(person.Usertype)) {
+            } else if ("Driver".equals(userType)) {
                 Driver driver = (Driver) person;
                 _driverService.registerDriver(driver);
                 return ResponseEntity.ok().build();

@@ -54,6 +54,7 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     public String address;
     public String Category;
     public String Usertype;
+    public String detectedUsertype;
     public String currentLongitude;
     public String currentLatitude;
 
