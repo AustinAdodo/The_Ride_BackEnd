@@ -35,6 +35,6 @@ internal memory for unit testing. MSSQL was utilised for testing for this reason
       ![Integration Tests Passed2](https://drive.google.com/uc?export=view&id=1ROamz6HLJ88APbo6ZfkYYVukhepHg7tc)
 
 ## Entity Relationship Diagram
-Below is a digram showing the relationship between enitites.
+Below is a diagram showing the relationship between enitites.
 ![entityDiagram](https://drive.google.com/uc?export=view&id=1PgY6dgNAarB5H6URClCAxoz9FMq8ZVP4)
       
