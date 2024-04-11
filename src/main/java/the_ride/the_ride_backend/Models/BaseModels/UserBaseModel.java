@@ -84,7 +84,7 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
         this.password = password;
     }
 
-    public void setName(String name) {
+    public void setName(@NotNull String name) {
         this.firstName = name.split(" ")[0].trim();
         this.lastName = name.split(" ")[1].trim();
     }
