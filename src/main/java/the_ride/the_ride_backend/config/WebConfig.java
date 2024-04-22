@@ -25,7 +25,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // You can adjust the strength parameter as required
         return new BCryptPasswordEncoder();
     }
 }
