@@ -3,7 +3,6 @@ package the_ride.the_ride_backend.Services;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -72,7 +71,7 @@ public class DriverService {
     }
 
     @Transactional
-    public void registerDriver(@NotNull Driver Person) {
+    public void registerDriver(Driver Person) {
         // Encode the password before setting it
         Person.setId(UUID.randomUUID());
         Person.setPassword(passwordEncoder.encode(Person.password));
