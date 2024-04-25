@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 @Controller
 public class MessageController {
     private final MessagePublisher messagePublisher;
+
     @Autowired
     private SimpMessagingTemplate template;
 

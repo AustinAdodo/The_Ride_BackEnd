@@ -13,9 +13,9 @@ import java.util.Optional;
 
 @Service
 public class TripService {
+    private static final double EARTH_RADIUS_KM = 6371.0;
     private final TripRepository tripRepository;
     private final DriverService _driverService;
-    private final BookingService _bookingService;
     private final Customer currentCustomer;
     private final Driver currentDriver;
     private Trip CurrentTrip;
@@ -23,10 +23,23 @@ public class TripService {
     @Autowired
     public TripService(BookingService bookingService, DriverService driverService, BookingService bookingService1) {
         _driverService = driverService;
-        _bookingService = bookingService1;
         tripRepository = null;
-        currentCustomer = _bookingService.GetCurrentCustomer();
-        currentDriver = _bookingService.GetChosenDriverDetails();
+        currentCustomer = bookingService1.GetCurrentCustomer();
+        currentDriver = bookingService1.GetChosenDriverDetails();
+    }
+
+    /**
+     * Calculates Optimal distance in Radians between 2 points to Kilometres.
+     * @return double
+     */
+    public static double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS_KM * c;
     }
 
     public Trip CancelTrip() {
