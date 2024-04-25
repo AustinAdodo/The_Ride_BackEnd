@@ -52,7 +52,8 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     public int TotalTrips;
     public String password;
     public String email;
-    private String Username;
+    @Column(nullable = false, unique = true)
+    private String username;
     public LocalDate DateOfBirth;
     public String status;
     public String address;
@@ -67,7 +68,7 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     }
 
     public String getUsername() {
-        return this.Username != null ? this.Username : this.email;
+        return this.username != null ? this.username : this.email;
     }
 
     @Override
