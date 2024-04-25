@@ -53,7 +53,7 @@ public class TheRideUnitTests {
                 "TotalTrips INT, " +
                 "Password NVARCHAR(255), " +
                 "email NVARCHAR(255), " +
-                "Username NVARCHAR(255), " +
+                "username NVARCHAR(255), " +
                 "DateOfBirth DATE, " +
                 "status NVARCHAR(255), " +
                 "address NVARCHAR(MAX), " +
