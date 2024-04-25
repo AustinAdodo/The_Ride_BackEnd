@@ -12,6 +12,7 @@ import the_ride.the_ride_backend.Exceptions.UserNotFoundException;
 import the_ride.the_ride_backend.Models.User.Customer;
 import the_ride.the_ride_backend.Repositories.UserRepository;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,27 @@ public class UserService {
         user.Rating = 0;
         user.email = Person.email;
         user.setPassword(passwordEncoder.encode(Person.password));
+        _userRepository.save(user);
+    }
+
+    /**
+     * Uses reflection to execute update
+     * and emphasises the need to update private fields also at field.setAccessible(true);
+     */
+
+    public void registerUser_Improved(Customer person) throws NoSuchFieldException, IllegalAccessException {
+        for (Field field : person.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            Object value = field.get(person);
+            Field userField = Customer.class.getDeclaredField(field.getName());
+            userField.setAccessible(true);
+            userField.set(new Customer(), value);
+        }
+        Customer user = new Customer();
+        user.setPassword(passwordEncoder.encode(person.getPassword()));
+        user.setStatus("Online");
+        user.setTotalTrips(0);
+        user.setRating(0);
         _userRepository.save(user);
     }
 
