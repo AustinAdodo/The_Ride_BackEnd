@@ -31,26 +31,26 @@ public class HomeController {
         _userService = userService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Response> login(@RequestBody LoginCredentials credentials) {
-        boolean isAuthenticated = authenticate(credentials.getUsername(), credentials.getPassword());
-        if (isAuthenticated) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(new Response(false, "accepted"));
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(new Response(false, "Unable to resolve request"));
-        }
-    }
-
-    @PostMapping("/logout")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public boolean logout() {
-        //check if email exists
-        return true;
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<Response> login(@RequestBody LoginCredentials credentials) {
+//        boolean isAuthenticated = authenticate(credentials.getUsername(), credentials.getPassword());
+//        if (isAuthenticated) {
+//            return ResponseEntity
+//                    .status(HttpStatus.OK)
+//                    .body(new Response(false, "accepted"));
+//        } else {
+//            return ResponseEntity
+//                    .status(HttpStatus.UNAUTHORIZED)
+//                    .body(new Response(false, "Unable to resolve request"));
+//        }
+//    }
+//
+//    @PostMapping("/logout")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+//    public boolean logout() {
+//        //check if email exists
+//        return true;
+//    }
 
     @PostMapping("/signup")
     public ResponseEntity<Boolean> signUp(@Valid @RequestBody UserBaseModel<UUID> person) {
