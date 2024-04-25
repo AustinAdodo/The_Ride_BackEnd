@@ -15,8 +15,7 @@ import the_ride.the_ride_backend.Models.Driver.Driver;
 import the_ride.the_ride_backend.Models.User.Customer;
 import the_ride.the_ride_backend.Services.DriverService;
 import the_ride.the_ride_backend.Services.UserService;
-import the_ride.the_ride_backend.Utiities.LoginCredentials;
-import the_ride.the_ride_backend.Utiities.Response;
+
 
 import java.util.UUID;
 
@@ -30,27 +29,6 @@ public class HomeController {
         _driverService = driverService;
         _userService = userService;
     }
-
-//    @PostMapping("/login")
-//    public ResponseEntity<Response> login(@RequestBody LoginCredentials credentials) {
-//        boolean isAuthenticated = authenticate(credentials.getUsername(), credentials.getPassword());
-//        if (isAuthenticated) {
-//            return ResponseEntity
-//                    .status(HttpStatus.OK)
-//                    .body(new Response(false, "accepted"));
-//        } else {
-//            return ResponseEntity
-//                    .status(HttpStatus.UNAUTHORIZED)
-//                    .body(new Response(false, "Unable to resolve request"));
-//        }
-//    }
-//
-//    @PostMapping("/logout")
-//    @PreAuthorize("hasRole('ROLE_USER')")
-//    public boolean logout() {
-//        //check if email exists
-//        return true;
-//    }
 
     @PostMapping("/signup")
     public ResponseEntity<Boolean> signUp(@Valid @RequestBody UserBaseModel<UUID> person) {
@@ -79,14 +57,14 @@ public class HomeController {
         return new ResponseEntity<>(new Driver(), HttpStatus.NOT_FOUND);
     }
 
-    private boolean authenticate(String email, String password) {
-        // Connect to your database (e.g., using JDBC or a JPA library)
-        // Query the database for a user with the provided email
-        // Check if the password matches the stored password (hashed and securely compared)
-        // Return true if credentials match, false otherwise
-
-        // This is a placeholder, you need to implement the actual logic
-        // to connect to your database and verify credentials
-        return true;
-    }
+//    private boolean authenticate(String email, String password) {
+//        // Connect to your database (e.g., using JDBC or a JPA library)
+//        // Query the database for a user with the provided email
+//        // Check if the password matches the stored password (hashed and securely compared)
+//        // Return true if credentials match, false otherwise
+//
+//        // This is a placeholder, you need to implement the actual logic
+//        // to connect to your database and verify credentials
+//        return true;
+//    }
 }
