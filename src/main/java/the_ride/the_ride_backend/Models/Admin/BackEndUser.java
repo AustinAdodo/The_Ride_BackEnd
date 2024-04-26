@@ -1,9 +1,6 @@
 package the_ride.the_ride_backend.Models.Admin;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
 
 /**
@@ -11,8 +8,10 @@ import the_ride.the_ride_backend.Models.BaseModels.UserBaseModel;
  */
 
 @Entity
+@Table(name = "back_end_users")
+@AttributeOverride(name = "id", column = @Column(name = "ID", insertable = false, updatable = false))
 public class BackEndUser extends UserBaseModel<Integer> {
-    @jakarta.persistence.Id
+    @Id
     @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
