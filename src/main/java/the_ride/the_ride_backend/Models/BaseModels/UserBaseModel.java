@@ -49,6 +49,7 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     public String sex;
     public Integer Rating;
     public String middleName;
+    public String role;
     public int TotalTrips;
     public String password;
     public String email;
