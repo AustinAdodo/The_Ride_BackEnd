@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "drivers")
+@AttributeOverride(name = "id", column = @Column(name = "ID", insertable = false, updatable = false))
 public class Driver extends UserBaseModel<UUID> {
     @Id
     @GeneratedValue(generator = "UUID")
