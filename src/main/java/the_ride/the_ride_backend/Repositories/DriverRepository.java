@@ -5,17 +5,19 @@ import org.springframework.stereotype.Repository;
 import the_ride.the_ride_backend.Models.Driver.Driver;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import the_ride.the_ride_backend.Models.User.Customer;
 
 import java.util.List;
 //import java.util.stream.Collectors;
 
 @Repository
 public interface DriverRepository extends JpaRepository<Driver, UUID> {
-
+    Optional<Driver> findByUsername(String username);
 //    @Query("SELECT d FROM Driver d WHERE d.latitude BETWEEN :minLat AND :maxLat " +
 //            "AND d.longitude BETWEEN :minLon AND :maxLon")
 //    List<Driver> findDriversInBoundingBoxOptional(@Param("minLat") double minLat,
