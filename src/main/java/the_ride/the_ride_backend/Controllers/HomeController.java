@@ -35,10 +35,12 @@ public class HomeController {
             String userType = person.getDetectedUsertype();
             if ("Customer".equals(userType)) {
                 Customer customer = (Customer) person;
+                customer.setRole("ROLE_USER");
                 _userService.registerUser(customer);
                 return ResponseEntity.ok().build();
             } else if ("Driver".equals(userType)) {
                 Driver driver = (Driver) person;
+                driver.setRole("ROLE_DRIVER");
                 _driverService.registerDriver(driver);
                 return ResponseEntity.ok().build();
             }
