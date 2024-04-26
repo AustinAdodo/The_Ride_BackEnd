@@ -117,8 +117,7 @@ public class UserService {
         if (!all.isEmpty()) {
             return all;
         }
-        List<Customer> emptyList = new ArrayList<>();
-        return emptyList;
+        return new ArrayList<>();
     }
 
     @Transactional
