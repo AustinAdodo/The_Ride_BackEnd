@@ -17,7 +17,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
  * Security Config
- * <br/>
+ * <br/><p>
  * Spring automatically prefixes "ROLE_" when using hasRole()
  * <br/>
  * From 7.1 to customize csRF see link below.
@@ -48,7 +48,8 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .successHandler((request, response, authentication) -> {
                             response.setStatus(HttpServletResponse.SC_OK);
-                            response.getWriter().write("Login successful!");
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"message\":\"Login successful!\"}");
                         })
                         .failureHandler((request, response, exception) -> {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
