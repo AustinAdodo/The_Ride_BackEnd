@@ -32,7 +32,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/signup**", "/js/**", "/css/**", "/img/**").permitAll()  // Public paths
+                .requestMatchers("/signup**", "/js/**", "/css/**", "/img/**","/ws/**").permitAll()  // Public paths
                 .requestMatchers("/driver/**").hasRole("DRIVER")  // Restricted to users with the DRIVER role
                 .requestMatchers("/customer/**").hasRole("CUSTOMER")  // Restricted to users with the CUSTOMER role
                 .requestMatchers("/**").authenticated()); // All other requests require authentication
