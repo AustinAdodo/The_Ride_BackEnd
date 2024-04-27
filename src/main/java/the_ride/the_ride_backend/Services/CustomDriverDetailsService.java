@@ -28,7 +28,7 @@ public class CustomDriverDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Driver driver = driverRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("Driver not found with username: " + username));
 
         return new User(driver.getUsername(), driver.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
