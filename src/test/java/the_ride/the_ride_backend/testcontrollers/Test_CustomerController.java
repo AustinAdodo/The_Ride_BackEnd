@@ -28,6 +28,7 @@ public class Test_CustomerController {
             this.service.add(customer);
             headers.add(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8");
             return new ResponseEntity<>(customer, headers, HttpStatus.CREATED);
+//            return ResponseEntity.noContent().headers(headers).build();
         }
         return new ResponseEntity<>(new Test_Customer(), HttpStatus.BAD_REQUEST);
     }
