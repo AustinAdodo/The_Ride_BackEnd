@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import the_ride.the_ride_backend.testmodels.Test_Customer;
 import the_ride.the_ride_backend.testservices.Test_CustomerService;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ class TheRideBackEndApplicationTests {
                 "TotalTrips INT, " +
                 "Password NVARCHAR(255), " +
                 "email NVARCHAR(255), " +
-                "username NVARCHAR(255), " +
+                "username NVARCHAR(255) NOT NULL, " +
                 "DateOfBirth DATE, " +
                 "status NVARCHAR(255), " +
                 "address NVARCHAR(MAX), " +
@@ -63,8 +64,8 @@ class TheRideBackEndApplicationTests {
                 "is_only_my_sex_allowed NVARCHAR(50), " +
                 "default_home_address NVARCHAR(MAX)" +
                 ");" +
-                "INSERT INTO test_Customers (firstName, lastName, is_only_my_sex_allowed) VALUES ('test-firstname', 'test-lastname'" +
-                ",'false');" +
+                "INSERT INTO test_Customers (first_name, last_name, is_only_my_sex_allowed,username) VALUES ('test-firstname', 'test-lastname'" +
+                ",'false','test-username');" +
                 "END";
         jdbcTemplate.execute(createTableSQL);
     }
@@ -74,42 +75,50 @@ class TheRideBackEndApplicationTests {
         service.clear();
     }
 
-    @BeforeEach
-    public void populateCustomers() {
-        customers.add(new Test_Customer("Austin", "Adodo"));
-        customers.add(new Test_Customer("Tony", "Kroos"));
-        customers.add(new Test_Customer("Cristiano", "Ronaldo"));
-        for (Test_Customer customer : customers) {
-            customer.setIsOnlyMySexAllowed("false");
-        }
-    }
-
     @AfterAll
     public static void tearDown() {
 //        teardown not necessary if using 'create-drop' for the Hibernate ddl-auto setting.
     }
 
     public void addCustomers() {
+        customers.clear();
+        Test_Customer customer1 = new Test_Customer("Austin", "Adodo");
+        Test_Customer customer2 = new Test_Customer("Tony", "Kroos");
+        Test_Customer customer3 = new Test_Customer("Cristiano", "Ronaldo");
+        customer1.setUsername("test_username1");
+        customer2.setUsername("test_username2");
+        customer3.setUsername("test_username3");
+        customers.add(customer1);
+        customers.add(customer2);
+        customers.add(customer3);
+        for (Test_Customer customer : customers) {
+            customer.setIsOnlyMySexAllowed("false");
+        }
         for (Test_Customer customer : customers) {
             this.service.add(customer);
         }
     }
 
     @Test
+    @WithMockUser(username = "test_user", roles = {"USER"})
     public void shouldAllowSavingOfCustomer() throws Exception {
         for (Test_Customer customer : customers) {
             this.mockMvc.perform(post("/test_customers")
                             .content(asJsonString(customer))
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isCreated())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                     .andExpect(jsonPath("$.firstName", is(customer.getFirstName())));
         }
     }
 
     @Test
+    @WithMockUser(username = "test_user", roles = {"USER"})
     public void shouldAllowUpdatingCustomers() throws Exception {
+        Integer count1 = this.service.getAll().size();
         addCustomers();
+        Integer count = this.service.getAll().size();
         String name = "Another Name";
         List<Test_Customer> all = this.service.getAll();
         Test_Customer customer = all.get(0);
@@ -125,6 +134,7 @@ class TheRideBackEndApplicationTests {
     }
 
     @Test
+    @WithMockUser(username = "test_user", roles = {"USER"})
     public void shouldAllowUsToRemoveArticles() throws Exception {
         addCustomers();
         List<Test_Customer> all = new ArrayList<Test_Customer>(this.service.getAll());
