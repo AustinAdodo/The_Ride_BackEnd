@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "customers")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @AttributeOverride(name = "id", column = @Column(name = "ID", insertable = false, updatable = false))
 public class Customer extends UserBaseModel<UUID> {
     @Id
