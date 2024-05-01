@@ -28,7 +28,8 @@ public class Test_CustomerService {
 
     @Transactional
     public void clear() {
-        this.test_customerRepository.flush();
+        //test_customerRepository.deleteAll();
+        test_customerRepository.deleteTop20Customers();
     }
 
     @Transactional //@ControllerAdvice
