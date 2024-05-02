@@ -37,4 +37,7 @@ internal memory for unit testing. MSSQL was utilised for testing for this reason
 ## Entity Relationship Diagram
 Below is a diagram showing the relationship between entities.
 ![entityDiagram](https://drive.google.com/uc?export=view&id=1PgY6dgNAarB5H6URClCAxoz9FMq8ZVP4)
+
+## See:
+https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html
       
