@@ -1,12 +1,8 @@
 package the_ride.the_ride_backend.testmodels;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import the_ride.the_ride_backend.Models.User.Customer;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "test_Customers")
