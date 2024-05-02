@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import the_ride.the_ride_backend.Models.User.Customer;
@@ -64,8 +65,8 @@ public class TheRideUnitTests {
                 "is_only_my_sex_allowed NVARCHAR(50), " +
                 "default_home_address NVARCHAR(MAX)" +
                 ");" +
-                "INSERT INTO customers (firstName, lastName, is_only_my_sex_allowed) VALUES ('test-firstname', 'test-lastname'" +
-                ",'false');" +
+                "INSERT INTO customers (first_name, last_name, is_only_my_sex_allowed,username) VALUES ('test-firstname', 'test-lastname'" +
+                ",'false','usernameTest');" +
                 "END";
         jdbcTemplate.execute(createTableSQL);
     }
@@ -90,12 +91,15 @@ public class TheRideUnitTests {
      * Unit test
      * This test ensures that the value of is_only_my_sex_allowed is correctly passed through the service layer.
      */
+
     @Test
+    @WithMockUser(username = "test_user", roles = {"USER"})
     public void testAddCustomerWithCorrectIsOnlyMySexAllowedField() {
         // Arrange
         Customer customer = new Customer();
         customer.setFirstName("John");
         customer.setLastName("Doe");
+        customer.setUsername("userName");
         customer.setIsOnlyMySexAllowed("false");
         UUID id = UUID.randomUUID();
         customer.setId(id);
