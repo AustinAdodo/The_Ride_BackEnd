@@ -18,12 +18,6 @@ import java.util.List;
 @Repository
 public interface DriverRepository extends JpaRepository<Driver, UUID> {
     Optional<Driver> findByUsername(String username);
-//    @Query("SELECT d FROM Driver d WHERE d.latitude BETWEEN :minLat AND :maxLat " +
-//            "AND d.longitude BETWEEN :minLon AND :maxLon")
-//    List<Driver> findDriversInBoundingBoxOptional(@Param("minLat") double minLat,
-//                                           @Param("maxLat") double maxLat,
-//                                           @Param("minLon") double minLon,
-//                                           @Param("maxLon") double maxLon);
 
     public default List<Driver> findDriversInBoundingBox(@Param("minLat") double minLat,
                                                          @Param("maxLat") double maxLat,
