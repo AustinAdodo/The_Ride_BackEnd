@@ -76,8 +76,8 @@ class TheRideBackEndApplicationTests {
     }
 
     @AfterAll
-    public static void tearDown() {
-//        teardown not necessary if using 'create-drop' for the Hibernate ddl-auto setting.
+    public void tearDown() {
+        service.clear();
     }
 
     public void addCustomers() {
