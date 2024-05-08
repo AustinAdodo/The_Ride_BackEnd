@@ -25,6 +25,9 @@ WORKDIR /app
 # Copy the JAR file from the build stage to the final image
 COPY --from=build /app/target/TheRideBackEndApplication.jar .
 
+# Set the environment to production
+ENV SPRING_PROFILES_ACTIVE=prod
+
 # Expose the port where your Spring application runs (typically 8080)
 EXPOSE 8080
 
