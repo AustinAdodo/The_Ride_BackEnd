@@ -4,7 +4,7 @@ FROM maven:3.8-openjdk-17-slim AS build
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy application code and resources
+# Copy application code and pom.xml
 COPY . .
 
 # Install RabbitMQ server
@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y rabbitmq-server
 # Expose RabbitMQ port (default: 5672)
 EXPOSE 5672
 
-# Build the application with Maven
-RUN mvn clean install
+# Build the application with Maven Shade Plugin
+RUN mvn -DskipTests=true package shade:shade
 
 # Start a new stage for the final image
 FROM openjdk:17-slim
@@ -22,8 +22,8 @@ FROM openjdk:17-slim
 # Set the working directory in the final image
 WORKDIR /app
 
-# Copy the JAR file from the build stage to the final image
-COPY --from=build /app/target/TheRideBackEndApplication.jar .
+# Copy the fat JAR with dependencies
+COPY --from=build /app/target/TheRideBackEndApplication-shaded.jar .
 
 # Set the environment to production
 ENV SPRING_PROFILES_ACTIVE=prod
@@ -32,4 +32,4 @@ ENV SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8080
 
 # Command to start your Spring application
-CMD ["java", "-jar", "TheRideBackEndApplication.jar"]
+CMD ["java", "-jar", "TheRideBackEndApplication-shaded.jar"]
