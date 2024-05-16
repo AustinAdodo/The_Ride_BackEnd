@@ -28,7 +28,7 @@ COPY --from=build /app/target/TheRideBackEndApplication.jar .
 # Set the environment to production
 ENV SPRING_PROFILES_ACTIVE=prod
 
-# Expose the port where your Spring application runs (typically 8080)
+# Expose the port
 EXPOSE 8080
 
 # Command to start your Spring application
