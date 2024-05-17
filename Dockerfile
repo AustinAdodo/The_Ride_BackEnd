@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y rabbitmq-server
 EXPOSE 5672
 
 # Build the application with Maven Shade Plugin
-RUN mvn -DskipTests=true package shade:shade
+RUN mvn -DskipTests=true package shade:shade && ls -la /app/target
 
 # Start a new stage for the final image
 FROM openjdk:17-slim
@@ -23,7 +23,6 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copy the fat JAR with dependencies
-# Add a trailing slash to copy to current directory
 COPY --from=build /app/target/The_Ride_BackEnd-0.0.1-SNAPSHOT-shaded.jar ./
 
 # Set the environment to production
