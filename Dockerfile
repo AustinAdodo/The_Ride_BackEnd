@@ -23,7 +23,7 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copy the fat JAR with dependencies
-COPY --from=build /app/target/TheRideBackEndApplication-shaded.jar .
+COPY --from=build /app/target/The_Ride_BackEnd-0.0.1-SNAPSHOT-shaded.jar .
 
 # Set the environment to production
 ENV SPRING_PROFILES_ACTIVE=prod
@@ -32,4 +32,4 @@ ENV SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8080
 
 # Command to start your Spring application
-CMD ["java", "-jar", "TheRideBackEndApplication-shaded.jar"]
+CMD ["java", "-jar", "The_Ride_BackEnd-0.0.1-SNAPSHOT-shaded.jar"]
