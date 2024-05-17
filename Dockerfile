@@ -23,7 +23,8 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copy the fat JAR with dependencies
-COPY --from=build /app/target/The_Ride_BackEnd-0.0.1-SNAPSHOT-shaded.jar .
+# Add a trailing slash to copy to current directory
+COPY --from=build /app/target/The_Ride_BackEnd-0.0.1-SNAPSHOT-shaded.jar ./
 
 # Set the environment to production
 ENV SPRING_PROFILES_ACTIVE=prod
