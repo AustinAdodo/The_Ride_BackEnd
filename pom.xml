@@ -223,29 +223,29 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>verify</phase> <!-- Move to a different phase -->
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>${project.artifactId}-${project.version}-shaded</finalName>
-                            <artifactSet>
-                                <includes>
-                                    <include>org.springframework.boot:spring-boot-starter-*</include>
-                                    <include>org.hibernate:hibernate-core</include>
-                                    <include>jakarta.*:*</include>
-                                </includes>
-                            </artifactSet>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-shade-plugin</artifactId>-->
+<!--                <version>3.5.3</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>verify</phase> &lt;!&ndash; Move to a different phase &ndash;&gt;-->
+<!--                        <goals>-->
+<!--                            <goal>shade</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <finalName>${project.artifactId}-${project.version}-shaded</finalName>-->
+<!--                            <artifactSet>-->
+<!--                                <includes>-->
+<!--                                    <include>org.springframework.boot:spring-boot-starter-*</include>-->
+<!--                                    <include>org.hibernate:hibernate-core</include>-->
+<!--                                    <include>jakarta.*:*</include>-->
+<!--                                </includes>-->
+<!--                            </artifactSet>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
