@@ -229,7 +229,7 @@
                 <version>3.5.3</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>verify</phase> <!-- Move to a different phase -->
                         <goals>
                             <goal>shade</goal>
                         </goals>
@@ -257,5 +257,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
