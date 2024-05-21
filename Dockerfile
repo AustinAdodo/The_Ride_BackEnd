@@ -23,7 +23,7 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copy the JAR file from the build stage to the final image
-COPY --from=build /app/target/TheRideBackEndApplication.jar .
+COPY --from=build /app/target/The_Ride_BackEnd-0.0.1-SNAPSHOT.jar ./
 
 # Copy RabbitMQ from the build stage to the final image (optional)
 COPY --from=build /usr/lib/rabbitmq /usr/lib/rabbitmq
@@ -36,4 +36,4 @@ ENV SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8080
 
 # Start RabbitMQ and your Spring application
-CMD ["sh", "-c", "rabbitmq-server start && java -jar TheRideBackEndApplication.jar"]
+CMD ["sh", "-c", "rabbitmq-server start && java -jar The_Ride_BackEnd-0.0.1-SNAPSHOT.jar"]
