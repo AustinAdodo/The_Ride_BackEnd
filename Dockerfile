@@ -32,7 +32,7 @@ COPY --from=build /var/lib/rabbitmq /var/lib/rabbitmq
 # Set the environment to production
 ENV SPRING_PROFILES_ACTIVE=prod
 
-# Expose the port where your Spring application runs (typically 8080)
+# Expose the port for Spring application
 EXPOSE 8080
 
 # Start RabbitMQ and your Spring application
