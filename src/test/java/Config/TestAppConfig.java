@@ -9,7 +9,7 @@ public class TestAppConfig {
 
     /**
      * Injecting the value of the SPRING_PROFILE environment variable
-     * Defaulting to "dev" if the environment variable is not set
+     * Defaulting to "prod" if the test environment variable is not set
      */
 
     @Value("${SPRING_PROFILE:prod}")
@@ -23,5 +23,6 @@ public class TestAppConfig {
     @PostConstruct
     public void init() {
         System.setProperty("spring.profiles.active", "test-" + activeProfile);
+        System.out.println("Active profile set to: " + System.getProperty("spring.profiles.active"));
     }
 }
