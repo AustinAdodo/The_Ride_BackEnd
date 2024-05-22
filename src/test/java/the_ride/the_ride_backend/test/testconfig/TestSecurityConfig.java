@@ -13,12 +13,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class TestSecurityConfig {
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/test_customers/**").permitAll()); // Public paths
-        http.httpBasic(withDefaults());
-        return http.build();
-    }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.authorizeHttpRequests(auth -> auth
+//                .requestMatchers("/test_customers/**").permitAll()); // Public paths
+//        http.httpBasic(withDefaults());
+//        return http.build();
+//    }
 }
 
