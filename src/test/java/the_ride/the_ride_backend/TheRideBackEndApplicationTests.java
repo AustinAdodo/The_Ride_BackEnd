@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import the_ride.the_ride_backend.config.EnvironmentLogger;
 import the_ride.the_ride_backend.testmodels.Test_Customer;
 import the_ride.the_ride_backend.testservices.Test_CustomerService;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -37,6 +38,15 @@ class TheRideBackEndApplicationTests {
     private MockMvc mockMvc;
 
     private static final List<Test_Customer> customers = new ArrayList<>();
+
+    @BeforeAll
+    public static void logEnvironmentVariables() {
+        // Log the environment variables
+        System.out.println("SPRING_PROFILES_ACTIVE=" + System.getenv("SPRING_PROFILES_ACTIVE"));
+        System.out.println("SPRING_DATASOURCE_URL=" + System.getenv("SPRING_DATASOURCE_URL"));
+        System.out.println("SPRING_DATASOURCE_USERNAME=" + System.getenv("SPRING_DATASOURCE_USERNAME"));
+        System.out.println("SPRING_DATASOURCE_PASSWORD=" + System.getenv("SPRING_DATASOURCE_PASSWORD"));
+    }
 
     @BeforeAll
     @Transactional

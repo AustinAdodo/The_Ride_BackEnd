@@ -17,10 +17,14 @@ public class EnvironmentLogger {
     @Value("${spring.datasource.password:Not Found}")
     private String datasourcePassword;
 
+    @Value("${spring.profiles.active:Not Found}")
+    private String environmentName;
+
     @Bean
     public CommandLineRunner logEnvironmentVariables() {
         return args -> {
             System.out.println("===== Environment Variables =====");
+            System.out.println("spring.datasource.url: " + environmentName);
             System.out.println("spring.datasource.url: " + datasourceUrl);
             System.out.println("spring.datasource.username: " + datasourceUsername);
             System.out.println("spring.datasource.password: " + datasourcePassword);
