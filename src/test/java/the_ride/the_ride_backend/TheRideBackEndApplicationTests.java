@@ -42,10 +42,8 @@ class TheRideBackEndApplicationTests {
     @BeforeAll
     public static void logEnvironmentVariables() {
         // Log the environment variables
-        System.out.println("SPRING_PROFILES_ACTIVE=" + System.getenv("SPRING_PROFILES_ACTIVE"));
-        System.out.println("SPRING_DATASOURCE_URL=" + System.getenv("SPRING_DATASOURCE_URL"));
-        System.out.println("SPRING_DATASOURCE_USERNAME=" + System.getenv("SPRING_DATASOURCE_USERNAME"));
-        System.out.println("SPRING_DATASOURCE_PASSWORD=" + System.getenv("SPRING_DATASOURCE_PASSWORD"));
+        System.out.println("SPRING_PROFILES_ACTIVE=" + System.getenv("SPRING_PROFILE"));
+        System.out.println("SPRING_DATABASE_HOSTNAME=" + System.getenv("AWS_DATABASE_HOSTNAME"));
     }
 
     @BeforeAll

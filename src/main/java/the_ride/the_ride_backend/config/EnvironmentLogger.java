@@ -24,7 +24,7 @@ public class EnvironmentLogger {
     public CommandLineRunner logEnvironmentVariables() {
         return args -> {
             System.out.println("===== Environment Variables =====");
-            System.out.println("spring.datasource.url: " + environmentName);
+            System.out.println("spring.profiles.active: " + environmentName);
             System.out.println("spring.datasource.url: " + datasourceUrl);
             System.out.println("spring.datasource.username: " + datasourceUsername);
             System.out.println("spring.datasource.password: " + datasourcePassword);
