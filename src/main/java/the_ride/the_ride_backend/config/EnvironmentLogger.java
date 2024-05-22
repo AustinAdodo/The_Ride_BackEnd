@@ -20,11 +20,6 @@ public class EnvironmentLogger {
     @Value("${spring.profiles.active:Not Found}")
     private String environmentName;
 
-    @Value("${AWS_DATABASE_USERNAME}")
-    private String dbUsername;
-
-    @Value("${AWS_DATABASE_PASSWORD}")
-    private String dbPassword;
 
     @Bean
     public CommandLineRunner logEnvironmentVariables() {
@@ -34,8 +29,6 @@ public class EnvironmentLogger {
             System.out.println("spring.datasource.url: " + datasourceUrl);
             System.out.println("spring.datasource.username: " + datasourceUsername);
             System.out.println("spring.datasource.password: " + datasourcePassword);
-            System.out.println("AWS_DATABASE_USERNAME: " + dbUsername);
-            System.out.println("AWS_DATABASE_PASSWORD: " + dbPassword);
             System.out.println("=================================");
         };
     }
