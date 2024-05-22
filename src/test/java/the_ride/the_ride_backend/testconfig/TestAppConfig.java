@@ -3,8 +3,10 @@ package the_ride.the_ride_backend.testconfig;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Configuration;
 
 @TestConfiguration
+@Configuration
 public class TestAppConfig {
 
     /**
@@ -18,6 +20,7 @@ public class TestAppConfig {
     /**
      * Method to set the active Spring profile based on the SPRING_PROFILE environment variable
      * Setting the active profile as a system property
+     * NB: You can also use @ActiveProfiles("test")
      */
 
     @PostConstruct

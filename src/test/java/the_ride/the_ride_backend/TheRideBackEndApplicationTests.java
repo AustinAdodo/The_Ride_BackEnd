@@ -22,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-//@ActiveProfiles("test-"+ TestHelperClass.activeProfile)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TheRideBackEndApplicationTests {
 
