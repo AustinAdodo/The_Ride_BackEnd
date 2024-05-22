@@ -1,4 +1,4 @@
-package Config;
+package testConfig;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
