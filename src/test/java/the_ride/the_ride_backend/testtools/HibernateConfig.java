@@ -1,11 +1,5 @@
-package the_ride.the_ride_backend.tools;
+package the_ride.the_ride_backend.testtools;
 
-import jakarta.persistence.EntityManagerFactory;
-import org.hibernate.Interceptor;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 //
 //@Configuration
 //public class HibernateConfig {

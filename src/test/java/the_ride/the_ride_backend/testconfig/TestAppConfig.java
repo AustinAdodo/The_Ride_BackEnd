@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend.config;
+package the_ride.the_ride_backend.testconfig;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;

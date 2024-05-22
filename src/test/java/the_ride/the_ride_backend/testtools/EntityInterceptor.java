@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend.tools;
+package the_ride.the_ride_backend.testtools;
 
 import org.hibernate.type.Type;
 import org.hibernate.Interceptor;
