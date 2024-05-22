@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend.testmodels;
+package the_ride.the_ride_backend.test.testmodels;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

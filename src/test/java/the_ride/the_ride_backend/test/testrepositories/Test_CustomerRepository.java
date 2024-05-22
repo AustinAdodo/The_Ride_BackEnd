@@ -1,11 +1,11 @@
-package the_ride.the_ride_backend.testrepositories;
+package the_ride.the_ride_backend.test.testrepositories;
 
 import org.slf4j.Logger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import the_ride.the_ride_backend.testmodels.Test_Customer;
+import the_ride.the_ride_backend.test.testmodels.Test_Customer;
 
 import java.util.UUID;
 

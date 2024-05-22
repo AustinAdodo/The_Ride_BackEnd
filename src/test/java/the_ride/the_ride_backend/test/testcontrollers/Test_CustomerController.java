@@ -1,12 +1,12 @@
-package the_ride.the_ride_backend.testcontrollers;
+package the_ride.the_ride_backend.test.testcontrollers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import the_ride.the_ride_backend.testmodels.Test_Customer;
-import the_ride.the_ride_backend.testservices.Test_CustomerService;
+import the_ride.the_ride_backend.test.testservices.Test_CustomerService;
+import the_ride.the_ride_backend.test.testmodels.Test_Customer;
 
 import java.util.List;
 import java.util.UUID;

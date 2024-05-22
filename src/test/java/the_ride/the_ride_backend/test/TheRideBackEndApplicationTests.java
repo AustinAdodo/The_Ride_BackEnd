@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend;
+package the_ride.the_ride_backend.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -10,8 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import the_ride.the_ride_backend.testmodels.Test_Customer;
-import the_ride.the_ride_backend.testservices.Test_CustomerService;
+import the_ride.the_ride_backend.test.testservices.Test_CustomerService;
+import the_ride.the_ride_backend.test.testmodels.Test_Customer;
 
 import java.util.ArrayList;
 import java.util.List;

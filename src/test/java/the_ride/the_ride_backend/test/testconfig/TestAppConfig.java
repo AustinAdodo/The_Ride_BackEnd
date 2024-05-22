@@ -1,12 +1,10 @@
-package the_ride.the_ride_backend.testconfig;
+package the_ride.the_ride_backend.test.testconfig;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Configuration;
 
 @TestConfiguration
-@Configuration
 public class TestAppConfig {
 
     /**

@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend;
+package the_ride.the_ride_backend.test;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;

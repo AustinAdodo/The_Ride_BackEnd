@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend.testtools;
+package the_ride.the_ride_backend.test.testtools;
 
 //
 //@Configuration

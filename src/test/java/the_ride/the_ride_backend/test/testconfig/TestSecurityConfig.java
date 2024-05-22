@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend.testconfig;
+package the_ride.the_ride_backend.test.testconfig;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

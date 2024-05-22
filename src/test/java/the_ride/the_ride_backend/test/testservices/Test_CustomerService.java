@@ -1,4 +1,4 @@
-package the_ride.the_ride_backend.testservices;
+package the_ride.the_ride_backend.test.testservices;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityManager;
@@ -7,8 +7,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-import the_ride.the_ride_backend.testmodels.Test_Customer;
-import the_ride.the_ride_backend.testrepositories.Test_CustomerRepository;
+import the_ride.the_ride_backend.test.testmodels.Test_Customer;
+import the_ride.the_ride_backend.test.testrepositories.Test_CustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
