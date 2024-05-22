@@ -7,12 +7,6 @@ WORKDIR /app
 # Copy application code and resources
 COPY . .
 
-# Install necessary packages for RabbitMQ
-RUN apt-get update && apt-get install -y rabbitmq-server
-
-# Expose RabbitMQ port (default: 5672)
-EXPOSE 5672
-
 # Build the application with Maven
 RUN mvn clean install
 
@@ -25,15 +19,11 @@ WORKDIR /app
 # Copy the JAR file from the build stage to the final image
 COPY --from=build /app/target/The_Ride_BackEnd-0.0.1-SNAPSHOT.jar ./
 
-# Copy RabbitMQ from the build stage to the final image (optional)
-COPY --from=build /usr/lib/rabbitmq /usr/lib/rabbitmq
-COPY --from=build /var/lib/rabbitmq /var/lib/rabbitmq
-
 # Set the environment to production
 ENV SPRING_PROFILES_ACTIVE=prod
 
 # Expose the port for Spring application
 EXPOSE 8080
 
-# Start RabbitMQ and your Spring application
-CMD ["sh", "-c", "rabbitmq-server start && java -jar The_Ride_BackEnd-0.0.1-SNAPSHOT.jar"]
+# Start your Spring application
+CMD ["java", "-jar", "The_Ride_BackEnd-0.0.1-SNAPSHOT.jar"]
