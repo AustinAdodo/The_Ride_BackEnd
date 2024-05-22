@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
-@ComponentScan(basePackages = {"the_ride.the_ride_backend.test.testconfig"})
+//@ComponentScan(basePackages = {"the_ride.the_ride_backend.test.testconfig"})
 class TheRideBackEndApplicationTests {
 
     @Autowired
