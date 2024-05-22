@@ -12,7 +12,7 @@ public class AppConfig {
      * Defaulting to "dev" if the environment variable is not set
      */
 
-    @Value("${SPRING_PROFILE:dev}")
+    @Value("${SPRING_PROFILE:prod}")
     private String activeProfile;
 
     /**
