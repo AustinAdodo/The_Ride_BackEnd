@@ -12,7 +12,7 @@ public class TestAppConfig {
      * Defaulting to "prod" if the test environment variable is not set
      */
 
-    @Value("${SPRING_PROFILE:prod}")
+    @Value("${SPRING_PROFILE:test-prod}")
     private String activeProfile;
 
     /**
