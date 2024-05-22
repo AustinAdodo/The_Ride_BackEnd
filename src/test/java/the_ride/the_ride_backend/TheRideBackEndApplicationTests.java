@@ -42,6 +42,7 @@ class TheRideBackEndApplicationTests {
     @BeforeAll
     public static void logEnvironmentVariables() {
         // Log the environment variables
+        System.out.println("===========DETECTED_ENVIRONMENT_VARIABLES============");
         System.out.println("SPRING_PROFILES_ACTIVE=" + System.getenv("SPRING_PROFILE"));
         System.out.println("SPRING_DATABASE_HOSTNAME=" + System.getenv("AWS_DATABASE_HOSTNAME"));
     }
