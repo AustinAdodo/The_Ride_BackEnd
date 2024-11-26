@@ -20,7 +20,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
  * <br/>
  * From 7.1 to customize csRF see link below.
  * @see <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/
- * annotation/web/builders/HttpSecurity.html#csrf(org.springframework.security.config.Customizer)">...</a>
+ * annotation/web/builders/HttpSecurity.html#csrf(org.springframework.security.config.Customizer)">spring security docs</a>
  */
 
 @Configuration
