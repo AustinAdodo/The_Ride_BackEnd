@@ -23,8 +23,9 @@ public class RabbitMQConfig {
     }
 
     /**
-    * direct exchange has been utilised.
-    */
+     * direct exchange has been utilised.
+     * Note: other possible exchanges are: fanout, headers, match, topic etc.
+     */
     @Bean
     DirectExchange exchange() {
         return new DirectExchange(exchange);

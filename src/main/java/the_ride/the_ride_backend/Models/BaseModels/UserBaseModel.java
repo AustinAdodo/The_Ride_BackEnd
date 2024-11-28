@@ -51,6 +51,7 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     public String middleName;
     public String role;
     public int TotalTrips;
+    @Setter
     public String password;
     public String email;
     @Column(nullable = false, unique = true)
@@ -80,10 +81,6 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
     @Override
     public void setId(T id) {
         this.id = id;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setName(@NotNull String name) {
