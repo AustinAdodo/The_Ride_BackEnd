@@ -29,6 +29,7 @@ public class Customer extends UserBaseModel<UUID> {
         }
     }
 
+    @Setter
     @BooleanString
     @Column(name = "is_only_my_sex_allowed")
     public String isOnlyMySexAllowed = "false";
@@ -51,13 +52,8 @@ public class Customer extends UserBaseModel<UUID> {
         this.firstName = firstname;
         this.lastName = lastname;
     }
-
     public Customer() {
         super("customer");
-    }
-
-    public void setIsOnlyMySexAllowed(String aFalse) {
-        this.isOnlyMySexAllowed = aFalse;
     }
 
     /*

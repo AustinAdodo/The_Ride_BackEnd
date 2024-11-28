@@ -6,11 +6,9 @@ import java.io.Serializable;
 
 @MappedSuperclass
 public abstract class BaseModel<PrimaryKey extends Serializable> implements IModel<PrimaryKey> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected PrimaryKey id;
-
 
     public abstract PrimaryKey getId();
 

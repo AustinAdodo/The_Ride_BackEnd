@@ -87,7 +87,6 @@ public abstract class UserBaseModel<T extends Serializable> extends BaseModel<T>
         this.firstName = name.split(" ")[0].trim();
         this.lastName = name.split(" ")[1].trim();
     }
-
     public String getFullName() {
         return this.firstName.trim() + " " + this.lastName.trim();
     }
